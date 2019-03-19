@@ -1,0 +1,80 @@
+/* components/addCarInfo/addCarInfo.wxss */
+
+.box .add-new-car {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.box .add-new-car .car-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 30rpx 30rpx;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 30rpx;
+}
+
+.box .add-new-car .car-info-content {
+  text-align: center;
+}
+
+.box .add-new-car .car-info-content>view {
+  display: flex;
+  justify-content: center;
+  margin: 40rpx 0;
+}
+
+.box .add-new-car .car-info-content>view text {
+  width: 20%;
+  line-height: 60rpx;
+  font-size: 34rpx;
+}
+
+.box .add-new-car .car-info-content>view text+input {
+  width: 60%;
+  height: 50rpx;
+  border: 1px solid #ccc;
+  font-size: 28rpx;
+  text-align: left;
+  padding: 4rpx 14rpx;
+}
+
+.box .add-new-car .car-info-content>view text+textarea {
+  width: 60%;
+  border: 1px solid #ccc;
+  height: 150rpx;
+  font-size: 28rpx;
+  text-align: left;
+  padding: 16rpx 14rpx;
+}
+
+.box .add-new-car .car-info-content>view .placeholder-class {
+  font-size: 28rpx;
+  text-align: left;
+}
+
+.box .add-new-car .addCarInfo {
+  display: flex;
+}
+
+.box .add-new-car .btn {
+  width: 30%;
+  padding: 16rpx 0;
+  margin: 200rpx auto 0;
+  text-align: center;
+  color: #fff;
+  background-color: rgb(255, 170, 44);
+  font-size: 36rpx;
+  border-radius: 10rpx;
+}
+
+.box .add-new-car .cancle-btn {
+  background-color: #ccc;
+}

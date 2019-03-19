@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/apply/apply",
+    "pages/appraise/appraise",
+    "pages/appointment/appointment",
+    "pages/orderForm/orderForm",
+    "pages/mine/mine",
+    "pages/carInfoList/carInfoList",
+    "pages/myTicket/myTicket",
+    "pages/lastData/lastData",
+    "pages/login/login"
+    
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置将用于地图中位置展示"
+    }
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}

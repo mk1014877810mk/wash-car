@@ -1,0 +1,62 @@
+/* pages/apply/apply.wxss */
+page{
+  background-color: #fff;
+}
+
+.box {
+  padding: 50rpx;
+}
+
+.box .title{
+  font-size: 36rpx;
+  margin: 0 0 -30rpx -20rpx;
+}
+
+.box form {
+  padding: 20rpx;
+}
+
+.box form view {
+  padding: 36rpx 0;
+  font-size: 30rpx;
+}
+
+.box form input {
+  height: 70rpx;
+  padding: 10rpx 20rpx;
+  border: 1px solid rgb(24, 144, 255);
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  color: #666;
+}
+
+.box form picker view {
+  position: relative;
+  padding: 10rpx 20rpx;
+  border: 1px solid rgb(24, 144, 255);
+  border-radius: 10rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  color: #666;
+}
+
+.box form picker view::after {
+  position: absolute;
+  content: '';
+  right: 30rpx;
+  top: 28rpx;
+  width: 0;
+  height: 0;
+  border: 10rpx solid transparent;
+  border-left-color: #999;
+  border-top-color: #999;
+  transform: rotate(-135deg);
+}
+
+.box form button{
+  margin-top: 80rpx;
+  font-size: 40rpx;
+  background-color: rgba(52, 61, 74, 1);
+  border-radius: 16rpx;
+  color: #fff;
+}

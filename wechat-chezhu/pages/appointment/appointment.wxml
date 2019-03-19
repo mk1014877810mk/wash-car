@@ -1,0 +1,95 @@
+<!--pages/appointment/appointment.wxml-->
+<!-- 洗车介绍 -->
+<view class='enter-model' hidden='{{hideEnterModel}}'>
+  <view class='enter-model-content'>
+    <image mode='scaleToFill' src='/images/interduce.png'></image>
+    <view class='enter-content'>
+      <view class='content-list'>
+        服务内容：车身清洗+轮毂清洗+内饰清洗
+      </view>
+      <view class='content-list'>
+        服务时间：15 ~ 20 分钟
+      </view>
+      <view class='content-list'>
+        服务效果：车身洁净，无无债
+      </view>
+      <view class='content-list'>
+        清洗原理：热分解原理
+      </view>
+      <view class='content-list'>
+        服务介绍：采用高压蒸汽洗车法，蒸汽温度在40-60度左右（可调节），高压热蒸汽不仅可消毒又可去污，有独特的热分解功能，能迅速软化泥沙、鸟粪、油渍、污渍等而又不伤车漆。
+      </view>
+      <view class='content-list'>
+        服务流程：一喷二冲三擦四养
+      </view>
+    </view>
+  </view>
+  <!-- 下一步按钮 -->
+  <view class='model-next-btn' bindtap='hideEnterModel'>下一步</view>
+</view>
+
+<!-- 主页面 -->
+<view class='box'>
+  <!-- 服务车辆 -->
+  <view class='item'>
+    <view class='content-title'>
+      <text>服务车辆</text>
+      <text class='add-car' bindtap='addCarNewInfo'>添加新车</text>
+    </view>
+    <view class='content-items'>
+      <view wx:if='{{carInfo.carList.length==0}}' class='no-info'>暂无车辆信息</view>
+      <view wx:else class='car-item'>
+        <view wx:for='{{carInfo.carList}}' wx:key='{{index}}' data-v_id='{{item.v_id}}' data-index='{{index+1}}' class='car-num {{carInfo.chooseCarIndex==index+1?"current":""}}' bindtap='chooseCarNum'>{{item.vehicle_plate}}</view>
+      </view>
+    </view>
+  </view>
+  <!-- 添加车辆信息 -->
+
+  <add-car-info id="add_car_info" bind:reGetCarList='getCarList'></add-car-info>
+
+  <!-- 服务时间 -->
+  <view class='item'>
+    <view class='content-title'>
+      <text>服务时间</text>
+    </view>
+    <view class='content-items choose-time'>
+      <view class='start-time'>
+        <picker mode="multiSelector" range="{{chooseTime.startDate}}" data-status='start' bindtap='bindTap' bindchange="bindChange" bindcolumnchange="bindColumnChange" value="{{chooseTime.startIndex}}">
+          <view wx:if='{{!chooseTime.showStart}}' class='picker-temp'>可以开始的时间</view>
+          <view wx:else class='choose-start-time'>
+            {{chooseTime.startDate[0][chooseTime.startIndex[0]]}}{{chooseTime.startDate[1][chooseTime.startIndex[1]]}}:{{chooseTime.startDate[2][chooseTime.startIndex[2]]}}
+          </view>
+        </picker>
+      </view>
+      <view>至</view>
+      <view class='end-time'>
+        <picker mode="multiSelector" range="{{chooseTime.startDate}}" data-status='end' bindtap='bindTap' bindchange="bindChange" bindcolumnchange="bindColumnChange" value="{{chooseTime.endIndex}}">
+          <view wx:if='{{!chooseTime.showEnd}}' class='picker-temp'>不要超过这个时间</view>
+          <view wx:else class='choose-end-time'>
+            {{chooseTime.startDate[0][chooseTime.endIndex[0]]}}{{chooseTime.startDate[1][chooseTime.endIndex[1]]}}:{{chooseTime.startDate[2][chooseTime.endIndex[2]]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 泊车地点 -->
+  <view class='item'>
+    <view class='content-title'>
+      <text>泊车地点</text>
+    </view>
+    <view class='content-items park' bindtap='getLocation'>
+      {{place.msg}}
+    </view>
+    <view hidden='{{place.hasOrder}}' class='content-items' style='color:red;font-size:28rpx;margin:30rpx 0;'>当前泊车地点无代理商或无该项业务，请重新选择</view>
+  </view>
+  <!-- 联系电话 -->
+  <view class='item'>
+    <view class='content-title'>
+      <text>联系电话</text>
+    </view>
+    <view class='content-items phone-num'>
+      <input type='number' maxlength='11' bindinput='bindinput'></input>
+    </view>
+  </view>
+  <view class='next-btn' bindtap='goOrderForm'>提交订单</view>
+</view>

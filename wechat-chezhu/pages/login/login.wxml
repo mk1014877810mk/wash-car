@@ -1,0 +1,5 @@
+<!--pages/login/login.wxml-->
+<view class='login'>
+  <image mode='aspectFill' src='/images/login-bak.png'></image>
+  <button class='button' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击登录 </button>
+</view>

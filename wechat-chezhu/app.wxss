@@ -1,0 +1,10 @@
+/**app.wxss**/
+page{
+  background-color: rgba(243, 243, 243, 1);
+}
+
+view.tips{
+  text-align: center;
+  font-size: 28rpx;
+  padding: 20rpx;
+}

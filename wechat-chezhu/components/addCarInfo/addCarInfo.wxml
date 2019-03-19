@@ -1,0 +1,32 @@
+<!--components/addCarInfo/addCarInfo.wxml-->
+<view class='box' wx:if='{{carInfo.showModel}}'>
+  <view class='add-new-car'>
+    <view class='car-title'>添加车辆信息</view>
+    <view class='car-info-content'>
+      <view class='car-num'>
+        <text>车牌：</text>
+        <input bindinput='carInfoInput' data-name='num' placeholder='请输入车牌号' placeholder-class='placeholder-class' maxlength='7'></input>
+      </view>
+      <view class='car-type'>
+        <text>型号：</text>
+        <input bindinput='carInfoInput' data-name='type' placeholder='请输入型号' placeholder-class='placeholder-class'></input>
+      </view>
+      <view class='car-type'>
+        <text>厢型：</text>
+        <input bindinput='carInfoInput' data-name='carBox' placeholder='请输入厢型' placeholder-class='placeholder-class'></input>
+      </view>
+      <view class='car-color'>
+        <text>颜色：</text>
+        <input bindinput='carInfoInput' data-name='color' placeholder='请输入车身颜色' placeholder-class='placeholder-class'></input>
+      </view>
+      <view class='car-tips'>
+        <text>备注：</text>
+        <textarea bindinput='carInfoInput' data-name='tips' placeholder='请在此处添加备注' placeholder-class='placeholder-class'></textarea>
+      </view>
+    </view>
+    <view class='addCarInfo'>
+      <view class='cancle-btn btn' bindtap='showOrHideModel'>取消</view>
+      <view class='success-btn btn' bindtap='commitCarInfo'>确认</view>
+    </view>
+  </view>
+</view>

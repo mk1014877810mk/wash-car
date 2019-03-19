@@ -1,0 +1,29 @@
+<!--pages/mine/mine.wxml-->
+<view class='box'>
+  <!-- 个人信息 -->
+  <view class='top'>
+    <view class='header'>
+      <image mode='widthFix' src='{{userImg}}'></image>
+    </view>
+    <view>{{name}}</view>
+    <view>{{phoneNum}}</view>
+  </view>
+  <!-- 我的列表 -->
+  <view class='list'>
+    <view class='car-info' bindtap='goMyMoney'>
+      <image mode='scaleToFill' src='/images/my-money.png'></image>
+      <text class='title'>我的钱包</text>
+      <text class='arrow'>></text>
+    </view>
+    <!-- <view class='my-ticket' bindtap='goMyReferrer'>
+      <image mode='scaleToFill' src='/images/referrer.png'></image>
+      <text class='title'>我的推荐</text>
+      <text class='arrow'>></text>
+    </view> -->
+    <view class='last-data' bindtap='goMyLastData'> 
+      <image mode='widthFix' src='/images/last-data.png'></image>
+      <text class='title'>洗车记录</text>
+      <text class='arrow'>></text>
+    </view>
+  </view>
+</view>

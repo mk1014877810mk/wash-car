@@ -1,0 +1,36 @@
+<!--pages/carInfoList/carInfoList.wxml-->
+<view class='box'>
+  <!-- 头部 -->
+  <view class='top'>
+    <view class='car-title'>
+      <text class='title'>我的车辆</text>
+      <text class='add' bindtap='addCarInfo'>+</text>
+    </view>
+    <view class='car-info'>
+      <text>汽车信息</text>
+    </view>
+  </view>
+  <!-- 内容 -->
+  <view class='bottom'>
+    <view class='no-car-info' hidden='{{carList.length>0}}'>暂无车辆信息</view>
+    <view class='car-list' wx:for='{{carList}}' wx:key='{{index}}'>
+      <view class='car-title'>
+        <text class='car-num'>{{item.vehicle_plate}}</text>
+        <text class='del' data-v_id='{{item.v_id}}' bindtap='delCarInfo'>删除</text>
+      </view>
+      <view class='car-another-info'>
+        <text>{{item.vehicle_type}}</text>
+        <text>{{item.vehicle_car}}</text>
+        <text>{{item.vehicle_color}}</text>
+      </view>
+      <view class='car-tips'>
+        <view class='tips-title'>备注：</view>
+        <view class='tips-content'>{{item.vehicle_tips}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加车辆信息 -->
+  <add-car-info id='add_car_info' bind:reGetCarList='getCarList'></add-car-info>
+
+</view>

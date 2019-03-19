@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class="box">
+  <view class='header'>
+    <text class='{{sort==1?"active":""}}' data-sort='1' bindtap='sorList'>距离排序</text>
+    <text class='{{sort==2?"active":""}}' data-sort='2' bindtap='sorList'>时间排序</text>
+  </view>
+  <!-- 订单列表 -->
+  <view class='order-list'>
+    <view wx:if='{{orderList.length==0}}' class='tips'>{{bindInfo?'暂无数据':'您当前还未被代理商绑定，请绑定后查看！'}}</view>
+    <view wx:else>
+      <view wx:for='{{orderList}}' wx:key='{{index}}' class='list-item'>
+        <view class='item-left'>
+          <view class='left-first'>
+            <text>{{item.vehicle_plate}}</text>
+            <text>{{item.vehicle_type}}</text>
+            <text>{{item.vehicle_car}}</text>
+            <text>{{item.vehicle_color}}</text>
+          </view>
+          <view class='left-second'>
+            距：{{item.distance}}m
+          </view>
+          <view class='left-time'>
+            {{item.time}}
+          </view>
+          <view class='left-address'>
+            {{item.parking_address}}
+          </view>
+        </view>
+        <view class='item-right' data-o_id='{{item.o_id}}' bindtap='doSomething'>
+          <view>接单</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- tips -->
+  <view class='tips' hidden='{{orderList.length<limit}}'>{{flag?'加载中...':'没有更多数据了'}}</view>
+</view>

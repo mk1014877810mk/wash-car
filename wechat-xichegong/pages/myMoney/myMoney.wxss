@@ -1,0 +1,84 @@
+/* pages/myMoney/myMoney.wxss */
+
+page {
+  color: #333;
+  background-color:rgb(244, 246, 249);
+}
+
+.box .header {
+  padding: 100rpx 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+.box .header image {
+  width: 180rpx;
+}
+
+.box .header view{
+  font-size: 50rpx;
+  font-weight: 600;
+}
+
+/* 收入 */
+
+.box .body .money-detail {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40rpx;
+  border-top: 1px solid #ddd;
+}
+
+.box .body .money-detail::before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: calc(100% - 90rpx);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  margin: auto;
+}
+
+.box .body .money-detail>view {
+  text-align: center;
+}
+
+.box .body .money-detail>view>view:nth-child(1) {
+  font-weight: 600;
+  font-size: 34rpx;
+}
+
+.box .body .money-detail>view>view:nth-child(2) {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 跳转入口 */
+
+.box .body .bill, .box .body .deposit {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  background-color: #fff;
+}
+
+.box .body .bill image, .box .body .deposit image {
+  width: 10%;
+}
+
+.box .body  .bill text, .box .body  .deposit text {
+  width: 80%;
+  margin-left: 30rpx;
+  font-size: 34rpx;
+}
+
+.box .body .bill text:nth-last-child(1),
+.box .body .deposit text:nth-last-child(1) {
+  width: 10%;
+}

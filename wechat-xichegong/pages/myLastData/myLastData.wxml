@@ -1,0 +1,25 @@
+<!--pages/myLastData/myLastData.wxml-->
+<view class='box'>
+  <!-- 头部 -->
+  <view class='top'>
+    <view class='data-title'>
+      <text class='title'>洗车记录</text>
+    </view>
+    <view class='data-info'>
+      <text>汽车</text>
+    </view>
+  </view>
+  <!-- 底部 -->
+  <view class='bottom'>
+    <view class='data-list' wx:for='{{lastDataList}}' wx:key='{{index}}'>
+      <view class='data-date'>{{item.date}}</view>
+      <view class='data-content'>
+        <text decode='{{true}}'>{{item.time}} &nbsp;&nbsp; {{item.vehicle_plate}}</text>
+        <text>{{item.order_price}}元</text>
+      </view>
+    </view>
+    <view class='tips mt' wx:if='{{lastDataList.length==0}}'>暂无数据</view>
+  </view>
+  <!-- tips -->
+  <view class='tips' hidden='{{lastDataList.length<limit}}'>{{flag?'加载中...':'没有更多数据了'}}</view>
+</view>

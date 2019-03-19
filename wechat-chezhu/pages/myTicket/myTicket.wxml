@@ -1,0 +1,40 @@
+<!--pages/myTicket/myTicket.wxml-->
+<view class='box'>
+  <!-- 头部 -->
+  <view class='top'>
+    <view class='ticket-title'>
+      <text class='title'>我的卡券</text>
+    </view>
+    <view class='ticket-info'>
+      <text>优惠券</text>
+    </view>
+  </view>
+  <!-- 内容 -->
+  <view class='bottom'>
+    <view class='ticket-list'>
+      <view class='ticket-title'>
+        <text class='ticket-name'>单次折扣券</text>
+        <text class='ticket-num'>9折</text>
+      </view>
+      <view class='ticket-another-info'>
+        <text>有效期至2018-02-02</text>
+      </view>
+      <view class='ticket-tips'>
+        <view class='tips-content'>9折券，最多可抵扣1.8元，不可混用</view>
+      </view>
+    </view>
+
+    <view class='ticket-list'>
+      <view class='ticket-title'>
+        <text class='ticket-name'>一元优惠券</text>
+        <text class='ticket-num'>1元</text>
+      </view>
+      <view class='ticket-another-info'>
+        <text>有效期至2018-02-02</text>
+      </view>
+      <view class='ticket-tips'>
+        <view class='tips-content'>9折券，最多可抵扣1.8元，不可混用</view>
+      </view>
+    </view>
+  </view>
+</view>

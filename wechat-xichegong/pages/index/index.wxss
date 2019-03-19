@@ -1,0 +1,91 @@
+/**index.wxss**/
+.box{
+  color: #666;
+}
+.box .header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  padding: 0 50rpx;
+  font-size: 32rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.box .header text{
+  width: 32%;
+  border: 2px solid transparent;
+}
+
+.box .header text.active{
+  font-weight: 600;
+  border-bottom-color: red;
+}
+
+/* 订单列表 */
+.box .order-list{
+  padding: 0 30rpx;
+  font-size: 30rpx;
+  margin-top: 100rpx;
+}
+
+.box .order-list .tips{
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 32rpx;
+  margin: 30rpx 0;
+}
+
+.box .order-list .list-item{
+  position: relative;
+  align-content: center;
+  padding: 30rpx;
+  border-bottom: 1px solid #ccc;
+}
+
+.box .order-list .list-item .item-left{
+  width: 78%;
+}
+
+.box .order-list .list-item .item-left .left-first{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .order-list .list-item .item-left .left-first text:nth-child(1){
+  font-weight: 600;
+  font-size: 36rpx;
+  color: #333;
+}
+
+.box .order-list .list-item .item-left .left-second{
+  color: red;
+  margin: 10rpx 0 36rpx;
+}
+
+.box .order-list .list-item .item-left .left-time{
+  margin-bottom: 10rpx;
+}
+
+.box .order-list .list-item .item-right{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 30rpx;
+  right: 30rpx;
+  width: 18%;
+  height: calc(100% - 60rpx);
+  text-align: center;
+  font-size: 40rpx;
+  background-color: rgb(255,107,0);
+  color: #fff;
+}

@@ -1,0 +1,132 @@
+/* pages/login/login.wxss */
+
+/* login */
+
+.login {
+  width: 100vw;
+  height: 100vh;
+}
+
+.login image {
+  width: 100%;
+  height: 100%;
+}
+
+.login .button {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  z-index: 1;
+  background-color: rgb(25, 155, 213);
+  font-size: 34rpx;
+  color: #fff;
+  transform: translateX(-50%);
+  border-radius: 10rpx;
+}
+
+/* model */
+
+.phone-model {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.phone-model .center {
+  color: #333;
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  border-radius: 10rpx;
+  padding: 40rpx 20rpx;
+  background-color: #fff;
+  width: 90%;
+}
+
+.phone-model .title {
+  padding: 0 20rpx 40rpx;
+  font-size: 38rpx;
+  font-weight: 600;
+}
+
+/* 绑定微信手机号 */
+
+.phone-model .choose-num .current-num {
+  position: relative;
+  padding: 10rpx 20rpx;
+  line-height: 100rpx;
+  border: 1px solid #ccc;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  font-size: 34rpx;
+}
+
+.phone-model .choose-num .current-num text {
+  font-size: 32rpx;
+  color: #999;
+  margin-left: 30rpx;
+}
+
+.phone-model .choose-num .current-num:after {
+  content: '';
+  width: 32rpx;
+  height: 20rpx;
+  border-left: 2px solid rgb(6, 193, 96);
+  border-bottom: 2px solid rgb(6, 193, 96);
+  border-radius: 6rpx;
+  position: absolute;
+  right: 50rpx;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.phone-model .choose-num .current-num+view {
+  padding: 10rpx 0;
+  line-height: 110rpx;
+  font-size: 32rpx;
+  color: rgb(6, 193, 96);
+}
+
+/* 更换绑定手机号 */
+input{
+  display: block;
+  margin: 20rpx auto;
+  border: 1px solid #ccc;
+  border-radius: 10rpx;
+  width: 95%;
+  height: 76rpx;
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+  font-size: 30rpx;
+}
+/* 按钮 */
+
+.phone-model .btns {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  padding: 40rpx 0 20rpx;
+}
+
+.phone-model .btns view {
+  width: 38%;
+  padding: 20rpx 0;
+  border-radius: 10rpx;
+  text-align: center;
+  font-size: 32rpx;
+}
+
+.phone-model .btns .cancel-btn {
+  background-color: #eee;
+  color: rgb(6, 193, 96);
+}
+
+.phone-model .btns .submit-btn {
+  background-color: rgb(6, 193, 96);
+  color: #fff;
+}

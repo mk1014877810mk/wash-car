@@ -1,0 +1,23 @@
+<!--pages/apply/apply.wxml-->
+<view class='box'>
+  <view class='title'>请输入有效信息</view>
+  <form bindsubmit="formSubmit">
+    <view>
+      <input name="application_name" placeholder='请输入您的姓名'></input>
+    </view>
+    <view>
+      <input name="application_phone" maxlength='11' placeholder='请输入您的手机号码'></input>
+    </view>
+    <view>
+      <picker mode="region" name="application_address" bindchange="chooseCity">
+        <view>
+          {{region[0]}}  {{region[1]}}  {{region[2]}}
+        </view>
+      </picker>
+    </view>
+    <view>
+      <input name="street" placeholder='请输入您的街道地址'></input>
+    </view>
+    <button form-type="submit">马上申请</button>
+  </form>
+</view>

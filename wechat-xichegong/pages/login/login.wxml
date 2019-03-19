@@ -1,0 +1,26 @@
+<!--pages/login/login.wxml-->
+<view class='login'>
+  <image mode='aspectFill' src='/images/login-bak.png'></image>
+  <button wx:if='{{hadLogin}}' class='button' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击登录 </button>
+  <button wx:else class='button' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">授权手机号</button>
+</view>
+<view class='phone-model' hidden='{{!showModel}}'>
+  <!-- 选择手机号 -->
+  <view class='center'>
+    <view wx:if='{{showCurrent}}' class='choose-num'>
+      <view class='title'>您的手机号码</view>
+      <view class='current-num'>{{phoneNum}} <text>微信绑定号码</text></view>
+      <view bindtap='changeNum'>使用其他号码</view>
+    </view>
+    <!-- 更改手机号 -->
+    <view wx:else class='change-num'>
+      <view class='title'>请输入您要绑定的手机号码</view>
+      <input bindinput='inputPhoneNum' placeholder='请输入手机号' maxlength='11'></input>
+    </view>
+    <!-- 提交按钮 -->
+    <view class='btns'>
+      <view class='cancel-btn' bindtap='showOrHideModel'>{{showCurrent?'拒绝':'取消'}}</view>
+      <view class='submit-btn' bindtap='sendPhoneNum'>{{showCurrent?'允许':'确定'}}</view>
+    </view>
+  </view>
+</view>

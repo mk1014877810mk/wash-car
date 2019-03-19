@@ -1,0 +1,153 @@
+/* pages/orderForm/orderForm.wxss */
+
+page {
+  background-color: #fff;
+}
+
+.box {
+  padding: 0 30rpx 20rpx;
+}
+
+/* 订单编号 */
+
+.box .orderform-num {
+  line-height: 60rpx;
+}
+
+.box .orderform-num>view:nth-child(1) {
+  font-size: 36rpx;
+}
+
+.box .orderform-num>view:nth-child(2) {
+  font-size: 30rpx;
+  color: #999;
+}
+
+/* 订单主体部分 */
+
+.box .money-info {
+  margin: 130rpx 0 200rpx;
+  text-align: center;
+}
+
+.box .money-info image {
+  width: 20%;
+}
+
+.box .money-info .money-num {
+  font-size: 50rpx;
+  font-weight: 600;
+  margin-top: 30rpx;
+}
+
+.box .ticket {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.box .ticket>view:nth-child(1) {
+  width: 20%;
+  font-size: 36rpx;
+}
+
+.box .ticket>view:nth-child(2) {
+  width: 60%;
+  font-size: 30rpx;
+  color: #999;
+  text-align: right;
+}
+
+/* 付款按钮 */
+
+.box .sure-btn {
+  width: 80%;
+  padding: 18rpx;
+  font-size: 38rpx;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(52, 61, 74, 1);
+  border-radius: 10rpx;
+  margin: 100rpx auto 0;
+}
+
+/* 优惠券列表 */
+
+
+.box .choose-ticket .ticket-list {
+  position: fixed;
+  left: 50%;
+  bottom: -700rpx;
+  z-index: 2;
+  width: 85%;
+  height: 700rpx;
+  padding: 40rpx ;
+  box-shadow: 0 0 4rpx 4rpx #ccc;
+  border-radius: 20rpx;
+  transform: translateX(-50%);
+  background-color: #fff;
+  transition: 0.3s linear;
+  box-sizing: border-box;
+}
+
+.box .choose-ticket .ticket-list.show-ticket {
+  bottom: 60rpx;
+}
+
+.box .choose-ticket .ticket-list image {
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  width: 50rpx;
+}
+
+.box .choose-ticket .ticket-list .ticket-title {
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.box .choose-ticket .ticket-list scroll-view {
+  height: 540rpx;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 1px;
+}
+
+.box .choose-ticket .ticket-list scroll-view .ticket-detail {
+  width: 84%;
+  margin: 40rpx auto 20rpx;
+  font-size: 30rpx;
+  color: #666;
+  padding: 40rpx;
+  box-shadow: 0 0 8rpx 6rpx #dedede;
+  border-radius: 10rpx;
+}
+
+.box .choose-ticket .ticket-list scroll-view .ticket-detail .ticket-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .choose-ticket .ticket-list scroll-view .ticket-detail .ticket-title .ticket-name {
+  font-size: 40rpx;
+  color: #000;
+  font-weight: 600;
+}
+
+.box .choose-ticket .ticket-list scroll-view .ticket-detail .ticket-title .ticket-num {
+  color: red;
+}
+
+.box .choose-ticket .ticket-list scroll-view .ticket-detail .ticket-another-info {
+  padding: 20rpx 0;
+}
+
+.box .choose-ticket .ticket-list scroll-view .ticket-detail .ticket-another-info>text {
+  margin-right: 30rpx;
+}
+

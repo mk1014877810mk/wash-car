@@ -1,0 +1,52 @@
+<!--pages/orderForm/orderForm.wxml-->
+<view class='box' catchtap='closeTicketList'>
+  <view class='orderform-num'>
+    <view>订单编号</view>
+    <view>{{orderNum}}</view>
+  </view>
+  <view class='money-info'>
+    <image mode='widthFix' src='/images/money.png'></image>
+    <view class='money-num'>{{lastMoney}} 元</view>
+  </view>
+  <view class='ticket'>
+    <view>优惠券</view>
+    <view catchtap='openTicketList'>{{ticketMsg}}</view>
+  </view>
+  <view class='sure-btn'>确认支付</view>
+
+  <!-- 优惠券列表 -->
+  <view class='choose-ticket' catchtap='openTicketList'>
+    <view class='ticket-list {{showList?"show-ticket":""}}'>
+      <view class='ticket-title'>可使用的优惠券</view>
+      <image mode='widthFix' src='/images/close.png' catchtap='closeTicketList'></image>
+      <scroll-view scroll-y>
+        <view class='ticket-detail' catchtap='chooseTicket'>
+          <view class='ticket-title'>
+            <text class='ticket-name'>单次折扣券</text>
+            <text class='ticket-num'>9折</text>
+          </view>
+          <view class='ticket-another-info'>
+            <text>有效期至2018-02-02</text>
+          </view>
+          <view class='ticket-tips'>
+            <view class='tips-content'>9折券，最多可抵扣1.8元，不可混用</view>
+          </view>
+        </view>
+
+        <view class='ticket-detail' catchtap='chooseTicket'>
+          <view class='ticket-title'>
+            <text class='ticket-name'>单次折扣券</text>
+            <text class='ticket-num'>9折</text>
+          </view>
+          <view class='ticket-another-info'>
+            <text>有效期至2018-02-02</text>
+          </view>
+          <view class='ticket-tips'>
+            <view class='tips-content'>9折券，最多可抵扣1.8元，不可混用</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+</view>

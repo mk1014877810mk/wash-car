@@ -1,0 +1,32 @@
+<!--pages/order/order.wxml-->
+<view class='box'>
+  <view wx:if='{{orderList.length==0}}' class='tips'>劳动最光荣，
+    <view> 您当前还没有任何订单，加油...</view>
+  </view>
+  <view wx:else class='order-list'>
+    <view wx:for='{{orderList}}' wx:key='{{index}}' class='list-item'>
+      <view class='item-left'>
+        <view>{{item.vehicle_plate}}</view>
+        <view class='left-first'>
+          <text>{{item.vehicle_type}}</text>
+          <text>{{item.vehicle_car}}</text>
+          <text>{{item.vehicle_color}}</text>
+        </view>
+        <view class='left-time'>
+          {{item.time}}
+        </view>
+        <view class='left-address'>
+          {{item.parking_address}}
+        </view>
+      </view>
+      <view class='item-right'>
+        <view class='look-map' bindtap='lookInMap' data-position='{{item.coordinate}}'>查看地图</view>
+        <view wx:if='{{item.order_status==3}}' class='right-btn' data-status='{{item.order_status}}' data-order_id='{{item.order_id}}' bindtap='doSomething'>清洗</view>
+        <view wx:else class='right-btn-finish' data-status='{{item.order_status}}' data-order_id='{{item.order_id}}' bindtap='doSomething'>完成</view>
+      </view>
+    </view>
+
+  </view>
+  <!-- tips -->
+  <view class='tips' hidden='{{orderList.length<limit}}'>{{flag?'加载中...':'没有更多数据了'}}</view>
+</view>

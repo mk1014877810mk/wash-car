@@ -1,0 +1,83 @@
+/* pages/order/order.wxss */
+
+/* 订单列表 */
+
+.box .tips {
+  padding: 100rpx 0;
+  text-align: center;
+  font-size: 32rpx;
+  color: #666;
+  line-height: 60rpx;
+}
+
+.box .order-list {
+  padding: 0 30rpx;
+  font-size: 30rpx;
+}
+
+.box .order-list .list-item {
+  position: relative;
+  align-content: center;
+  padding: 30rpx;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.box .order-list .list-item .item-left {
+  width: 78%;
+}
+
+.box .order-list .list-item .item-left>view:nth-child(1) {
+  font-weight: 600;
+  font-size: 36rpx;
+  color: #333;
+}
+
+.box .order-list .list-item .item-left .left-first {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.box .order-list .list-item .item-left .left-first text {
+  margin-right: 40rpx;
+}
+
+.box .order-list .list-item .item-left .left-time {
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.box .order-list .list-item .item-right {
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  width: 18%;
+  height: calc(100% - 60rpx);
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.box .order-list .list-item .item-right view {
+  white-space: nowrap;
+}
+
+.box .order-list .list-item .item-right view.look-map {
+  color: red;
+}
+
+.box .order-list .list-item .item-right view.right-btn,
+.box .order-list .list-item .item-right view.right-btn-finish {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 20rpx 26rpx;
+  color: #fff;
+}
+
+.box .order-list .list-item .item-right view.right-btn {
+  background-color: rgb(0, 128, 0);
+}
+
+.box .order-list .list-item .item-right view.right-btn-finish {
+  background-color: rgb(22, 155, 213);
+}

@@ -1,0 +1,29 @@
+<!--pages/myMoney/myMoney.wxml-->
+<view class='box'>
+  <view class='header'>
+    <image mode='widthFix' src='/images/money.png'></image>
+    <view>￥{{money.wallet_balance}}</view>
+  </view>
+  <view class='body'>
+    <view class='money-detail'>
+      <view>
+        <view>￥{{money.one_day}}</view>
+        <view>当天收入</view>
+      </view>
+      <view>
+        <view>￥{{money.all_income}}</view>
+        <view>累积收入</view>
+      </view>
+    </view>
+    <navigator class='bill' url='/pages/bill/bill'>
+      <image mode='widthFix' src='/images/bill.png'></image>
+      <text>账单</text>
+      <text>></text>
+    </navigator>
+    <navigator class='deposit'>
+      <image mode='widthFix' src='/images/deposit.png'></image>
+      <text>提现</text>
+      <text>></text>
+    </navigator>
+  </view>
+</view>

@@ -1,0 +1,70 @@
+/* pages/myTicket/myTicket.wxss */
+page{
+  background-color: #fff;
+}
+/* 头部信息 */
+
+.box .top {
+  padding: 30rpx 30rpx 16rpx;
+  background-color: #fff;
+}
+
+.box .top .ticket-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.box .top .ticket-info {
+  margin-top: 20rpx;
+}
+
+.box .top .ticket-info text {
+  padding: 10rpx;
+  font-size: 30rpx;
+  border-bottom: 6rpx solid rgb(255, 102, 0);
+}
+
+/* 底部信息 */
+
+.box .bottom {
+  padding: 0 40rpx 40rpx;
+  border-top: 20rpx solid rgba(243, 243, 243, 1);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.box .bottom .ticket-list {
+  margin-top: 40rpx;
+  font-size: 30rpx;
+  color: #666;
+  padding: 40rpx;
+  box-shadow: 0 0 8rpx 6rpx #dedede;
+  border-radius: 10rpx;
+}
+
+.box .bottom .ticket-list .ticket-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .bottom .ticket-list .ticket-title .ticket-name {
+  font-size: 40rpx;
+  color: #000;
+  font-weight: 600;
+}
+
+.box .bottom .ticket-list .ticket-title .ticket-num {
+  color: red;
+}
+
+.box .bottom .ticket-another-info {
+  padding: 20rpx 0;
+}
+
+.box .bottom .ticket-another-info>text {
+  margin-right: 30rpx;
+}

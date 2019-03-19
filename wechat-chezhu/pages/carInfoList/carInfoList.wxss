@@ -1,0 +1,84 @@
+/* pages/carInfoList/carInfoList.wxss */
+page{
+  background-color: #fff;
+}
+/* 头部信息 */
+
+.box .top {
+  padding: 30rpx 30rpx 16rpx;
+  background-color: #fff;
+}
+
+.box .top .car-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.box .top .car-title text.add {
+  color: #666;
+  font-size: 60rpx;
+}
+
+.box .top .car-info {
+  margin-top: 20rpx;
+}
+
+.box .top .car-info text {
+  padding: 10rpx;
+  font-size: 30rpx;
+  border-bottom: 6rpx solid rgb(255, 102, 0);
+}
+
+/* 底部信息 */
+
+.box .bottom {
+  padding: 0 40rpx 40rpx;
+  border-top: 20rpx solid rgba(243, 243, 243, 1);
+  background-color: #fff;
+}
+
+.box .bottom .no-car-info{
+  text-align: center;
+  font-size: 28rpx;
+  padding-top: 40rpx;
+  color: #999;
+}
+
+.box .bottom .car-list {
+  font-size: 30rpx;
+  color: #666;
+  padding: 40rpx;
+  border-bottom: 1px solid #ddd;
+}
+
+.box .bottom .car-list .car-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .bottom .car-list .car-title .car-num {
+  font-size: 40rpx;
+  color: #000;
+  font-weight: 600;
+}
+
+.box .bottom .car-list .car-title .del {
+  color: red;
+}
+
+.box .bottom .car-another-info {
+  padding: 10rpx 0;
+}
+
+.box .bottom .car-another-info>text {
+  margin-right: 30rpx;
+}
+
+.box .bottom .car-tips view.tips-title {
+  margin: 10rpx 0;
+}
+

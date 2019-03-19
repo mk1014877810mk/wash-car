@@ -1,0 +1,195 @@
+/* pages/appointment/appointment.wxss */
+
+/* 洗车介绍 */
+
+.enter-model {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  box-sizing: border-box;
+  z-index: 2;
+  overflow-y: scroll;
+  padding-bottom: 100rpx;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.enter-model .enter-model-content {
+  padding: 20rpx;
+}
+
+.enter-model .enter-model-content image {
+  width: 100%;
+  height: 500rpx;
+}
+
+.enter-model .enter-model-content .enter-content .content-list {
+  word-break: break-all;
+  font-size: 34rpx;
+  line-height: 60rpx;
+}
+
+/* 下一步按钮 */
+
+.enter-model .model-next-btn {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 46rpx;
+  color: #fff;
+  background-color: rgb(255, 170, 44);
+  width: 100%;
+  padding: 20rpx 0;
+  margin: 30rpx 0 0;
+}
+
+/* 主页面 */
+
+.box {
+  padding: 20rpx 30rpx 60rpx;
+  margin-top: 20rpx;
+  background-color: #fff;
+}
+
+.box .item {
+  font-size: 34rpx;
+  margin: 10rpx 0;
+}
+
+.box .item text {
+  display: inline-block;
+  font-weight: 600;
+  line-height: 60rpx;
+  vertical-align: middle;
+}
+
+.box .item .content-title .add-car {
+  float: right;
+  font-weight: 400;
+  color: #999;
+  font-size: 30rpx;
+}
+
+.box .item .content-items {
+  text-align: center;
+}
+
+/* 服务车辆 */
+
+.box .item .content-items .car-item {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.box .item .content-items .no-info {
+  padding: 20rpx 0;
+  color: #999;
+  font-size: 30rpx;
+}
+
+.box .item .content-items .car-num {
+  display: inline-block;
+  width: 40%;
+  margin: 2% 3%;
+  padding: 2% 0;
+  border: 4rpx solid #999;
+  border-radius: 10rpx;
+  color: #333;
+}
+
+.box .item .content-items .car-num.current {
+  border-color: rgb(255, 102, 0);
+}
+
+/* 服务时间 */
+
+.box .item .content-items.choose-time {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+}
+
+.box .item .content-items.choose-time::before {
+  content: '';
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 102, 0);
+  border-radius: 50%;
+}
+
+.box .item .content-items.choose-time .picker-temp {
+  font-size: 30rpx;
+  color: rgb(255, 102, 0);
+  padding: 8rpx 30rpx;
+  border-bottom: 1px solid rgb(255, 102, 0);
+}
+
+.box .item .content-items.choose-time .choose-start-time,
+.box .item .content-items.choose-time .choose-end-time {
+  font-size: 30rpx;
+  color: rgb(255, 102, 0);
+  padding: 8rpx 30rpx;
+}
+
+/* 泊车地点 */
+
+.box .item .content-items.park {
+  position: relative;
+  text-align: left;
+  font-weight: normal;
+  font-size: 30rpx;
+  color: rgb(255, 102, 0);
+  line-height: 40rpx;
+  padding: 10rpx 0 6rpx 20rpx;
+}
+
+.box .item .content-items.park::before {
+  content: '';
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 102, 0);
+  border-radius: 50%;
+}
+
+/* 联系电话 */
+
+.box .item .content-items.phone-num {
+  padding: 20rpx;
+}
+
+.box .item .content-items.phone-num input {
+  border: 1px solid #999;
+  text-align: left;
+  padding: 5rpx 10rpx;
+  font-size: 30rpx;
+}
+
+/* 提交订单按钮 */
+
+.box .next-btn {
+  width: 90%;
+  margin: 80rpx auto 0;
+  padding: 20rpx;
+  color: #fff;
+  background-color: rgb(255, 170, 44);
+  border-radius: 10rpx;
+  font-size: 40rpx;
+  text-align: center;
+}

@@ -1,0 +1,63 @@
+<!--index.wxml-->
+<view class="box">
+  <!-- 头部轮播图 -->
+  <view class='top'>
+    <swiper indicator-dots='{{true}}' indicator-color='#fff' indicator-active-color='#000' autoplay interval='3000' duration='500' circular='{{true}}'>
+      <swiper-item>
+        <image mode='aspectFill' src='/images/banner.png'></image>
+      </swiper-item>
+      <swiper-item>
+        <image mode='aspectFill' src='/images/banner1.png'></image>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!-- 下方信息 -->
+  <view class='index-tips'>
+    <view wx:if='{{notAppraiseCount!=0}}'>您有{{notAppraiseCount}}个订单待评价，
+      <text bindtap='goAppraise'>去评价</text>
+    </view>
+  </view>
+
+  <!-- 当前未完成的订单列表 -->
+  <view class='order-list'>
+
+    <view class='order-list-item' bindtap='goOrderForm' data-status='{{item.order_status}}' data-order_id='{{item.o_id}}' wx:for='{{notOverOrderList}}' wx:key='{{index}}'>
+      <view class='order-title'>
+        <text class='order-name'>{{item.vehicle_plate}}</text>
+        <text hidden='{{item.order_status!=1}}' class='order-num'>未付款</text>
+        <text hidden='{{item.order_status!=2}}' class='order-num'>等待接单</text>
+        <text hidden='{{item.order_status!=3}}' class='order-num'>已接单</text>
+        <text hidden='{{item.order_status!=4}}' class='order-num'>清洁中</text>
+        <text hidden='{{item.order_status!=5}}' class='order-num'>待评价</text>
+        <text hidden='{{item.order_status!=6}}' class='order-num'>已评价</text>
+      </view>
+      <view class='order-another-info'>
+        <text>{{item.time}}</text>
+      </view>
+      <view class='order-tips'>
+        <view class='tips-content'>{{item.parking_address}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我要预约按钮 -->
+  <view class='button {{notOverOrderList.length<=0?"need-margintop":""}}'>
+    <button bindtap='goAppointment'>{{notOverOrderList.length
+      <=0? "我要预约": "继续预约"}}</button>
+  </view>
+
+  <!-- nav -->
+  <view class='own-info'>
+    <image mode='widthFix' bindtap='share' src='/images/share.png'></image>
+    <image mode='widthFix' bindtap='goMine' src='/images/user.png'></image>
+  </view>
+</view>
+
+<!-- 开篇小广告模态框 -->
+<view class='model' hidden='{{modelHide}}'>
+  <view class='center'>
+    <image mode='aspectFill' src='/images/tips.png'></image>
+    <view class='button' bindtap='goApply'>立即申请</view>
+    <view class='close' bindtap='hideModel'></view>
+  </view>
+</view>

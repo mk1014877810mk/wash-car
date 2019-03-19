@@ -1,0 +1,67 @@
+/* pages/lastData/lastData.wxss */
+page{
+  background-color: #fff;
+}
+
+/* 头部信息 */
+
+.box .top {
+  padding: 30rpx 30rpx 16rpx;
+  background-color: #fff;
+}
+
+.box .top .data-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.box .top .data-info {
+  margin-top: 20rpx;
+}
+
+.box .top .data-info text {
+  padding: 10rpx;
+  font-size: 30rpx;
+  border-bottom: 6rpx solid rgb(255, 102, 0);
+}
+
+/* 底部信息 */
+
+.box .bottom {
+  padding: 0 60rpx 40rpx 40rpx;
+  border-top: 20rpx solid rgba(243, 243, 243, 1);
+  background-color: #fff;
+  overflow: hidden;
+}
+.box .tips{
+  padding: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+}
+.box .bottom .data-list {
+  margin-top: 70rpx;
+  font-size: 34rpx;
+  color: #333;
+}
+
+.box .bottom .data-list .data-date{
+  display: inline-block;
+  padding: 10rpx 40rpx;
+  margin-left: -50rpx;
+  font-weight: 600;
+  box-sizing: border-box;
+  border-top-right-radius: 40rpx;
+  border-bottom-right-radius: 40rpx;
+  background-color: rgb(235,235,235);
+}
+
+.box .bottom .data-list .data-content{
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}

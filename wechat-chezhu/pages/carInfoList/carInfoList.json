@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "车辆信息",
+  "usingComponents": {
+    "add-car-info": "../../../components/addCarInfo/addCarInfo"
+  }
+}

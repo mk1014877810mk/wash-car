@@ -1,0 +1,42 @@
+<!--pages/appraise/appraise.wxml-->
+<view class='box'>
+  <!-- 头部 -->
+  <view class='top'>
+    <view class='appraise-title'>
+      <text class='title'>待评价订单</text>
+    </view>
+  </view>
+  <!-- 内容 -->
+  <view class='bottom'>
+    <view wx:for='{{notAppraiseList}}' wx:key='{{index}}' class='appraise-list'>
+      <view class='appraise-title'>
+        <text class='appraise-name'>{{item.vehicle_plate}}</text>
+        <text class='appraise-num' data-order_id='{{item.o_id}}' bindtap='showOrHideModal'>点击评价</text>
+      </view>
+      <view class='appraise-another-info'>
+        <text>{{item.add_time.slice(0,16)}}</text>
+      </view>
+      <view class='appraise-tips'>
+        <view class='tips-content'>{{item.parking_address}}</view>
+      </view>
+    </view>
+  </view>
+  <!-- tips -->
+  <view class='tips' hidden='{{notAppraiseList.length<loadInfo.limit}}'>{{flag?'加载中...':'没有更多数据了'}}</view>
+</view>
+
+<!-- model -->
+<view hidden='{{!showModal}}' class='model' catchtap='cancelAppraise'>
+  <view class='model-content' catchtap='stopProgation'>
+    <view class='title'>请评价</view>
+    <view class='des'>你的评价是提升我们服务的保证</view>
+    <view class='do-it'>
+      <image wx:for='{{imgSrc}}' wx:key='{{index}}' catchtap='chooseAppraise' data-index='{{index}}' mode='widthFix' src='{{item}}'></image>
+    </view>
+    <view class='say-something'>
+      <text>还想说句话：</text>
+      <input bindinput='bindInput'></input>
+    </view>
+    <view class='submit-btn' catchtap='submitAppraise'>确认提交</view>
+  </view>
+</view>

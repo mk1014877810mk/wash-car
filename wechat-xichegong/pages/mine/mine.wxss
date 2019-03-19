@@ -1,0 +1,82 @@
+/* pages/mine/mine.wxss */
+
+page {
+  background-color: #fff;
+}
+
+.box .top {
+  position: relative;
+  padding: 40rpx;
+  height: 360rpx;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: rgb(244, 246, 249);
+}
+
+.box .top .header {
+  display: inline-block;
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  margin-top: 20rpx;
+  padding: 10rpx;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.box .top .header~view {
+  font-size: 34rpx;
+  margin-top: 10rpx;
+}
+
+.box .top .header image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* 个人包裹列表 */
+
+.box .list {
+  background-color: #fff;
+  padding: 30rpx;
+}
+
+.box .list>view {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100rpx;
+  padding: 10rpx;
+}
+
+.box .list>view:nth-child(1) image {
+  flex: 0.8;
+  height: 70rpx;
+}
+
+.box .list>view:nth-child(2) image {
+  flex: 0.8;
+  height: 70rpx;
+}
+
+.box .list>view:nth-child(3) image {
+  flex: 0.8;
+  height: 50rpx;
+}
+
+.box .list>view text {
+  color: #333;
+}
+
+.box .list>view text.title {
+  flex: 6;
+  padding-left: 26rpx;
+  box-sizing: border-box;
+  font-size: 32rpx;
+}
+
+.box .list>view text.arrow {
+  flex: 1;
+  text-align: center;
+}

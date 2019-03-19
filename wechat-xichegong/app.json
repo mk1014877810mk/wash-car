@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/order",
+    "pages/myMoney/myMoney",
+    "pages/myLastData/myLastData",
+    "pages/bill/bill",
+    "pages/mine/mine",
+    "pages/login/login"
+  ],
+  "networkTimeout": {
+    "request": 10000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置将用于地图中位置展示"
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath":"images/home.png",
+        "selectedIconPath":"images/home1.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单",
+        "iconPath": "images/order.png",
+        "selectedIconPath": "images/order1.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/mine.png",
+        "selectedIconPath": "images/mine1.png"
+      }
+    ],
+    "color":"#666666",
+    "selectedColor":"#ff6b00"
+  }
+}

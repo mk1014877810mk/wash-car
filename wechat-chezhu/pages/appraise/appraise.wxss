@@ -1,0 +1,133 @@
+/* pages/appraise/appraise.wxss */
+page{
+  background-color: #fff;
+}
+/* 正文 */
+
+/* 头部信息 */
+
+.box .top {
+  padding: 30rpx;
+  background-color: #fff;
+}
+
+.box .top .appraise-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+/* 底部信息 */
+
+.box .bottom {
+  padding: 0 40rpx 40rpx;
+  border-top: 20rpx solid rgba(243, 243, 243, 1);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.box .bottom .appraise-list {
+  margin-top: 40rpx;
+  font-size: 30rpx;
+  color: #666;
+  padding: 40rpx;
+  box-shadow: 0 0 8rpx 6rpx #dedede;
+  border-radius: 10rpx;
+}
+
+.box .bottom .appraise-list .appraise-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .bottom .appraise-list .appraise-title .appraise-name {
+  font-size: 40rpx;
+  color: #000;
+  font-weight: 600;
+}
+
+.box .bottom .appraise-list .appraise-title .appraise-num {
+  padding: 8rpx 14rpx;
+  color: #fff;
+  background-color: rgb(0, 162, 202);
+}
+
+.box .bottom .appraise-another-info {
+  padding: 20rpx 0;
+}
+
+.box .bottom .appraise-another-info>text {
+  margin-right: 30rpx;
+}
+
+/* model */
+
+.model {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+}
+
+.model .model-content {
+  width: 80%;
+  padding: 50rpx 30rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  color: #666;
+  font-size: 30rpx;
+}
+
+.model .model-content .title {
+  font-size: 36rpx;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+}
+
+.model .model-content .des {
+  margin: 40rpx 0 10rpx;
+}
+
+.model .model-content .do-it {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.model .model-content .say-something {
+  display: flex;
+  justify-content: left;
+  align-content: center;
+  margin: 20rpx 0 60rpx;
+}
+
+.model .model-content .say-something input {
+  border-bottom: 1px solid #666;
+  flex: 6;
+}
+
+.model .model-content .do-it image {
+  width: 15%;
+  margin: 20rpx;
+}
+
+.model .model-content .submit-btn {
+  width: 60%;
+  margin: 0 auto;
+  background-color: rgb(0, 162, 202);
+  text-align: center;
+  padding: 10rpx 0;
+  color: #fff;
+  font-size: 34rpx;
+}
