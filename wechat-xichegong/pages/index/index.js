@@ -24,7 +24,7 @@ Page({
       if (app.common.startLoad(app)) {
         clearInterval(timer);
         wx.showLoading();
-        this.getOrderList();
+        this.getOrderList(true);
         this.setData({
           bindInfo: true
         })
@@ -39,7 +39,7 @@ Page({
 
   },
 
-  getOrderList(callback) {
+  getOrderList(init, callback) { //params:init=>是否初始化列表数据
     app.request.getOrderList({
       x_id: app.globalData.x_id,
       coordinate: app.globalData.long.toString() + ',' + app.globalData.lat.toString(),
@@ -49,6 +49,11 @@ Page({
     }).then(res => {
       // console.log('首页未接单列表', res);
       if (res.status == 1000) {
+        if (init) {
+          this.setData({
+            orderList: []
+          });
+        }
         res.data.forEach(el => {
           el.time = el.add_time.slice(0, 16);
         })
@@ -81,10 +86,9 @@ Page({
     if (sort == this.data.sort) return;
     this.setData({
       page: 1,
-      sort,
-      orderList: []
+      sort
     });
-    this.getOrderList();
+    this.getOrderList(true);
   },
   // 接单
   doSomething(e) {
@@ -102,12 +106,15 @@ Page({
           page: 1,
           limit: tempPage * tempLimit
         });
-        this.getOrderList(() => {
+        this.getOrderList(true, () => {
           this.setData({
             page: tempPage,
             limit: tempLimit
           });
         });
+      } else if (res.status == 1001) {
+        app.request.showTips('该订单已被别人抢走啦！');
+        this.getOrderList(true);
       }
     }).catch(err => {
       console.log('接单失败', err)
@@ -119,10 +126,7 @@ Page({
    */
   onShow: function() {
     if (this.data.bindInfo) {
-      this.setData({
-        orderList: []
-      });
-      this.getOrderList();
+      this.getOrderList(true);
     }
   },
 

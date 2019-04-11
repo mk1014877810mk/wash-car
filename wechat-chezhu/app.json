@@ -10,7 +10,6 @@
     "pages/myTicket/myTicket",
     "pages/lastData/lastData",
     "pages/login/login"
-    
   ],
   "permission": {
     "scope.userLocation": {

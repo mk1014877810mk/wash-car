@@ -1,5 +1,6 @@
 // pages/orderForm/orderForm.js
 const app = getApp();
+let flag = true;
 Page({
 
   /**
@@ -61,6 +62,55 @@ Page({
     this.setData({
       showList: false
     });
+  },
+
+  changePayStatus() {
+    app.request.changePayStatus({
+      data: {
+        o_id: this.data.order_id
+      },
+      complete: () => {
+        console.log('修改为已支付状态完成');
+        wx.redirectTo({
+          url: '/pages/appraise/appraise?status=1',
+        });
+      }
+    })
+  },
+
+  payMoney() {
+    if (!flag) return;
+    flag = false;
+    app.request.payMoney({
+      data: {
+        o_id: this.data.order_id,
+        owner_id: app.globalData.u_id
+      },
+      success: res => {
+        // console.log('支付前操作成功', res);
+        if (res.status == 1000) {
+          wx.requestPayment({
+            timeStamp: res.data.timeStamp,
+            nonceStr: res.data.nonceStr,
+            package: res.data.package,
+            signType: res.data.signType,
+            paySign: res.data.paySign,
+            success: res1 => {
+              // console.log('支付成功', res1);
+              this.changePayStatus();
+            },
+            fail: function(err1) {
+              console.log('支付失败', err1)
+              app.request.showTips('支付失败');
+              flag = true;
+            }
+          })
+        }
+      },
+      fail: err => {
+        console.log('支付前操作失败', err)
+      },
+    })
   },
 
   /**

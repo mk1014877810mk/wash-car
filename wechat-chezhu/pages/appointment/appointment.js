@@ -10,7 +10,16 @@ const reg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57]|19
 let clickFlag = true; // 提交订单按钮监控
 Page({
   data: {
+    // 刚进来时的宣传页模态框
     hideEnterModel: false,
+    modelInfo: {},
+    // 服务类型模态框
+    type_id: '', // 类型id
+    r_id: '', // 价格id
+    typeText: '', // 类型名称
+    hideServeTypeModel: true,
+    typeList: [],
+    hasType: true, // 当前选中的地点是否有该项服务
     // 服务车辆信息
     carInfo: {
       chooseCarIndex: 0, // 车牌号选择
@@ -41,11 +50,46 @@ Page({
     phoneNum: ''
   },
 
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    this.setData({
+      type_id: options.type_id,
+      typeText: options.title,
+      r_id: options.r_id,
+      hideEnterModel: options.target == 1
+    });
+    wx.setNavigationBarTitle({
+      title: options.target == 1 ? '订单' : '服务详情',
+    });
+    this.getCarList();
+    this.initDate();
+    options.target != 1 && this.getWashCarInfo();
+  },
 
   /**
    * 洗车宣传页介绍
    */
+
+  getWashCarInfo() {
+    app.request.getWashCarInfo({
+      data: {
+        r_id: this.data.r_id
+      },
+      success: res => {
+        // console.log('洗车宣传页数据', res);
+        if (res.status == 1000) {
+          this.setData({
+            modelInfo: {
+              imgSrc: app.request.ajaxUrl + res.data.project_image,
+              textContentArr: res.data.content_info.split('&&')
+            }
+          });
+        }
+      },
+      fail: err => {
+        console.log('洗车宣传页数据获取失败', err);
+      }
+    })
+  },
   hideEnterModel() {
     if (!app.globalData.u_id) {
       app.request.needToLogin();
@@ -54,10 +98,59 @@ Page({
     this.setData({
       hideEnterModel: true
     });
-    this.getCarList();
-    this.initDate();
+    wx.setNavigationBarTitle({
+      title: '订单'
+    });
   },
 
+  /**
+   * 服务类型
+   */
+  showTypeModel() {
+    if (!this.data.place.hasOrder) {
+      return app.request.showTips('当前泊车地点无代理商,请重新选择泊车地点');
+    }
+    this.showOrHideTypeModel(true);
+  },
+  stopPropgation() {
+    return false;
+  },
+  showOrHideTypeModel(select) {
+    if (select) this.getCurrentServerType();
+    this.setData({
+      hideServeTypeModel: !this.data.hideServeTypeModel
+    });
+  },
+  getCurrentServerType() {
+    app.request.getCurrentServerType({
+      data: {
+        agent_id: app.globalData.agent_id
+      },
+      success: res => {
+        // console.log('代理商类型', res);
+        if (res.status == 1000) {
+          res.data.forEach(el => {
+            el.service_thumb = app.request.ajaxUrl + el.service_thumb
+          });
+          this.setData({
+            typeList: res.data
+          });
+        }
+      },
+      fail: err => {
+        console.log('获取当前供应商类型失败', err);
+      }
+    })
+  },
+  makeSure(e) {
+    const index = e.currentTarget.dataset.index;
+    const typeId = e.currentTarget.dataset.typeid;
+    this.showOrHideTypeModel();
+    this.setData({
+      type_id: typeId,
+      typeText: this.data.typeList[index].service_name
+    });
+  },
 
   /**
    * 服务车辆
@@ -133,7 +226,7 @@ Page({
   bindTap(e) {
     if (e.currentTarget.dataset.status == 'start') { // 选择开始时间
       if (this.data.chooseTime.showStart) return;
-      var now = new Date();
+      var now = new Date(Date.now() + 1800000);
       var nowHour = now.getHours();
       var nowMinute = now.getMinutes();
       this.setData({
@@ -142,7 +235,7 @@ Page({
     } else { // 选择结束时间
       if (this.data.chooseTime.showEnd) return;
       if (!this.data.chooseTime.showStart) { // 先选择的是结束时间
-        var now = new Date();
+        var now = new Date(Date.now() + 1800000);
         var nowHour = now.getHours();
         var nowMinute = now.getMinutes();
         this.setData({
@@ -158,6 +251,7 @@ Page({
   },
   bindChange(e) {
     var that = this;
+    // console.log('最终开始和结束时间', this.data.chooseTime.startIndex, this.data.chooseTime.endIndex)
     if (e.currentTarget.dataset.status == 'start') {
       that.setData({
         'chooseTime.showStart': true
@@ -179,12 +273,11 @@ Page({
         });
       }
     }
-
   },
   bindColumnChange(e) {
     var that = this;
     if (e.currentTarget.dataset.status == 'start') { // 选择开始时间
-      var now = new Date();
+      var now = new Date(Date.now() + 1800000);
       var nowHour = now.getHours();
       var nowMinute = now.getMinutes();
       var startIndex = this.data.chooseTime.startIndex;
@@ -211,6 +304,12 @@ Page({
         this.disableData('start', e.detail.column, e.detail.value, nowHour);
       } else if (e.detail.column == 2) { // 分钟
         if (this.data.chooseTime.startIndex[1] <= nowHour && this.data.chooseTime.startIndex[0] == 0) {
+          if (e.detail.value >= nowMinute) {
+            startIndex[e.detail.column] = e.detail.value;
+            this.setData({
+              'chooseTime.startIndex': startIndex
+            });
+          }
           this.disableData('start', e.detail.column, e.detail.value, nowMinute);
         } else {
           startIndex[e.detail.column] = e.detail.value;
@@ -220,6 +319,7 @@ Page({
           this.disableData('start', e.detail.column, e.detail.value, 0);
         }
       }
+      // console.log('选择开始时间', this.data.chooseTime.startIndex)
     } else { // 选择结束时间
       var nowDate = this.data.chooseTime.startIndex[0];
       var nowHour = this.data.chooseTime.startIndex[1];
@@ -250,6 +350,12 @@ Page({
         this.disableData('end', e.detail.column, e.detail.value, nowHour);
       } else if (e.detail.column == 2) { // 分钟
         if (this.data.chooseTime.endIndex[1] <= nowHour && this.data.chooseTime.endIndex[0] <= nowDate) {
+          if (e.detail.value >= nowMinute) {
+            endIndex[e.detail.column] = e.detail.value;
+            this.setData({
+              'chooseTime.endIndex': endIndex
+            });
+          }
           this.disableData('end', e.detail.column, e.detail.value, nowMinute);
         } else {
           endIndex[e.detail.column] = e.detail.value;
@@ -259,6 +365,7 @@ Page({
           this.disableData('end', e.detail.column, e.detail.value, 0);
         }
       }
+      // console.log('选择结束时间', this.data.chooseTime.endIndex)
     }
   },
   disableData(status, column, num, min) { // 参数：状态、第几列、当前数值，最小值
@@ -307,14 +414,18 @@ Page({
           data: {
             u_id: app.globalData.u_id,
             longitude: res.longitude,
-            latitude: res.latitude
+            latitude: res.latitude,
+            type_id: this.data.type_id
           },
           success: res2 => {
             // console.log('是否在服务范围内', res2);
             if (res2.status == 1000) {
               that.setData({
+                hasType: true,
+                'place.hasOrder': true,
                 'place.agent_id': res2.data
               });
+              app.globalData.agent_id = res2.data;
 
               app.request.hasPrise({
                 data: {
@@ -335,9 +446,17 @@ Page({
               })
 
             } else if (res2.status == 40007) {
+              app.request.showTips('当前地点无代理商，请重新选择地点');
               that.setData({
                 'place.hasOrder': false
               });
+            } else if (res2.status == 40010) {
+              app.request.showTips('当前地点无该服务类型，请重新选择服务类型或地点');
+              that.setData({
+                hasType: false,
+                'place.agent_id': res2.data
+              });
+              app.globalData.agent_id = res2.data;
             }
           },
           fail: err => {
@@ -388,7 +507,8 @@ Page({
       parking_address: this.data.place.msg,
       contact_phone: this.data.phoneNum,
       owner_id: app.globalData.u_id,
-      agent_id: this.data.place.agent_id
+      agent_id: this.data.place.agent_id,
+      type_id: this.data.type_id
     }
     app.request.submitFormData({
       data,
@@ -421,7 +541,9 @@ Page({
 
   // 表单提交验证
   validate() {
-    if (!this.data.carInfo.v_id) {
+    if (!this.data.hasType) {
+      return app.request.showTips('当前泊车地点无该服务类型，请重新地点或类型');
+    } else if (!this.data.carInfo.v_id) {
       return app.request.showTips('请选择车辆');
     } else if (!this.data.chooseTime.showStart) {
       return app.request.showTips('请选择开始时间');

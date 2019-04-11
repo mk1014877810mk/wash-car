@@ -1,6 +1,6 @@
 <!--pages/login/login.wxml-->
 <view class='login'>
-  <image mode='aspectFill' src='/images/login-bak.png'></image>
+  <image mode='aspectFill' src='/images/login-bak.jpg'></image>
   <button wx:if='{{hadLogin}}' class='button' open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击登录 </button>
   <button wx:else class='button' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">授权手机号</button>
 </view>

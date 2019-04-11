@@ -7,6 +7,9 @@ Page({
    */
   data: {
     money: {},
+    hideModel: true,
+    inputMoney: 0,
+    canSubmit: false, // 能否提现
   },
 
   /**
@@ -34,14 +37,63 @@ Page({
       x_id: app.globalData.x_id
     }).then(res => {
       // console.log('我的钱包', res);
-      if(res.status==1000){
+      if (res.status == 1000) {
         this.setData({
-          money:res.data
+          money: res.data
         });
       }
     }).catch(err => {
       console.log('我的钱包数获取失败', err);
     })
+  },
+
+  bindInput(e) {
+    var val = Number(e.detail.value);
+    if (isNaN(val)) return app.request.showTips('请输入数字');
+    this.setData({
+      inputMoney: val.toFixed(2),
+      canSubmit: val > 0 && val <= this.data.money.wallet_balance
+    });
+  },
+
+  getMoneyToMyself() {
+    if (!this.data.canSubmit) return;
+    app.request.getMoneyToMyself({
+      x_id: app.globalData.x_id,
+      amount: this.data.inputMoney
+    }).then(res => {
+      console.log('提现成功', res);
+      if (res.status == 1000) {
+        app.request.showTips('提现成功', 'success');
+        setTimeout(() => {
+          wx.switchTab({
+            url: '/pages/mine/mine',
+          });
+        }, 2000);
+      } else if (res.status == 1) {
+        app.request.showTips('余额不足');
+      } else if (res.status == 2) {
+        app.request.showTips('提现不能小于500元');
+      } else if (res.status == 4) {
+        app.request.showTips('每日仅能提现一次');
+      } else if (res.status == 5) {
+        app.request.showTips('提现失败');
+      } else if (res.status == 6) {
+        app.request.showTips('余额不足');
+      }
+    }).catch(err => {
+      console.log('提现失败', err);
+    })
+  },
+
+  stopPropgation(){
+    return false;
+  },
+
+  showOrHideModel(){
+    this.setData({
+      hideModel: !this.data.hideModel
+    });
   },
 
   /**

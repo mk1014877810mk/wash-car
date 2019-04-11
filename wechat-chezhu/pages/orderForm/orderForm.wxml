@@ -8,11 +8,11 @@
     <image mode='widthFix' src='/images/money.png'></image>
     <view class='money-num'>{{lastMoney}} 元</view>
   </view>
-  <view class='ticket'>
+  <!-- <view class='ticket'>
     <view>优惠券</view>
     <view catchtap='openTicketList'>{{ticketMsg}}</view>
-  </view>
-  <view class='sure-btn'>确认支付</view>
+  </view> -->
+  <view class='sure-btn' bindtap='payMoney'>确认支付</view>
 
   <!-- 优惠券列表 -->
   <view class='choose-ticket' catchtap='openTicketList'>

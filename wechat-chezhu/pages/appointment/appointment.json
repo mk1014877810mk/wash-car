@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单详情",
+  "navigationBarTitleText": "",
   "usingComponents": {
     "add-car-info": "../../../components/addCarInfo/addCarInfo"
   }

@@ -6,8 +6,15 @@ page{
 
 /* 头部信息 */
 
+.box .no-list{
+  padding: 100rpx 0;
+  text-align: center;
+  font-size: 34rpx;
+  color: #666;
+}
+
 .box .top {
-  padding: 30rpx;
+  padding: 80rpx 30rpx;
   background-color: #fff;
 }
 
@@ -17,6 +24,15 @@ page{
   align-items: center;
   font-size: 40rpx;
   font-weight: 600;
+}
+
+.box .top .second-title{
+  font-size: 34rpx;
+  font-weight: 400;
+  color: #666;
+  background-color: #efefef;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
 }
 
 /* 底部信息 */
@@ -130,4 +146,43 @@ page{
   padding: 10rpx 0;
   color: #fff;
   font-size: 34rpx;
+}
+
+/* 未完成订单展示 */
+
+.box .order-list .order-list-item {
+  margin-top: 40rpx;
+  font-size: 30rpx;
+  color: #666;
+  padding: 40rpx 40rpx 50rpx;
+  box-shadow: 0 0 8rpx 6rpx #dedede;
+  border-radius: 10rpx;
+}
+
+.box .order-list .order-list-item .order-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box .order-list .order-list-item .order-title .order-name {
+  font-size: 40rpx;
+  color: #000;
+  font-weight: 600;
+}
+
+.box .order-list .order-list-item .order-title .order-num {
+  color: red;
+}
+
+.box .order-list .order-list-item .order-another-info {
+  padding: 20rpx 0;
+}
+
+.box .order-list .order-list-item .order-another-info>text {
+  margin-right: 30rpx;
+}
+
+.box .order-list .order-list-item .order-tips {
+  margin-top: 30rpx;
 }

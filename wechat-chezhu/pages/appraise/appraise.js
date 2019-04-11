@@ -9,6 +9,7 @@ Page({
    */
   data: {
     u_id: '',
+    status: '', // 判断是从哪个入口进入  1=>我的订单 空=>待评价订单
     showModal: false,
     notAppraiseList: [],
     imgSrc: [origin, origin, origin, origin, origin],
@@ -19,7 +20,9 @@ Page({
       page: 1,
       limit: 10,
       flag: true
-    }
+    },
+
+    notOverOrderList: [], // 当前未完成订单列表
   },
 
   /**
@@ -29,15 +32,27 @@ Page({
     wx.showLoading();
     const u_id = app.globalData.u_id;
     this.setData({
+      status: options.status || '0',
       u_id,
     })
-    this.getNotAppraiseList();
+    this.data.status == 0 ? this.getNotAppraiseList() : this.getNotFinishOrder();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {},
+  checkStatus() {
+    this.setData({
+      status: this.data.status == 0 ? '1' : '0',
+      'loadInfo.page': 1,
+      'loadInfo.flag': true,
+      notAppraiseList: [],
+      notOverOrderList: []
+    });
+    wx.showLoading();
+    this.data.status == 0 ? this.getNotAppraiseList() : this.getNotFinishOrder();
+  },
 
   // 获取未评价订单
   getNotAppraiseList(callback) {
@@ -49,7 +64,13 @@ Page({
       },
       success: res => {
         // console.log('未评价列表', res);
+        wx.setNavigationBarTitle({
+          title: '未评价订单',
+        });
         if (res.status == 1000) {
+          res.data.forEach(el => {
+            el.time = el.add_time.slice(0, 16);
+          });
           this.setData({
             notAppraiseList: res.data
           });
@@ -60,7 +81,7 @@ Page({
           }
           callback && callback();
         } else if (res.status == 1006) {
-          if (this.data.page == 1) {
+          if (this.data.loadInfo.page == 1) {
             this.setData({
               notAppraiseList: []
             });
@@ -114,10 +135,7 @@ Page({
   },
 
   submitAppraise() {
-    if (!this.data.startCount) {
-      app.request.showTips('请选择星星！');
-      return;
-    }
+    if (!this.data.startCount) return app.request.showTips('请选择星星！');
     wx.showLoading();
     app.request.submitAppraise({
       data: {
@@ -150,6 +168,48 @@ Page({
       }
     })
 
+  },
+
+
+
+
+  // 获取未完成订单列表
+  getNotFinishOrder() {
+    app.request.getNotFinishOrder({
+      data: {
+        u_id: app.globalData.u_id
+      },
+      success: res => {
+        // console.log('未完成订单', res);
+        wx.setNavigationBarTitle({
+          title: '未完成订单',
+        });
+        if (res.status == 1000) {
+          res.data.forEach(el => {
+            el.time = el.add_time.slice(0, 16);
+          });
+          this.setData({
+            notOverOrderList: res.data
+          });
+        } else if (res.status == 1006) {
+          this.setData({
+            notOverOrderList: []
+          });
+        }
+      },
+      fail: err => {
+        console.log('首页未完成订单获取失败', err);
+      }
+    })
+  },
+  // 跳往订单支付页
+  goOrderForm(e) {
+    const status = e.currentTarget.dataset.status;
+    const order_id = e.currentTarget.dataset.order_id;
+    if (status != 1) return;
+    wx.navigateTo({
+      url: '../orderForm/orderForm?order_id=' + order_id
+    });
   },
 
   /**
@@ -188,7 +248,10 @@ Page({
     this.setData({
       'loadInfo.page': ++this.data.loadInfo.page
     });
-    this.getNotAppraiseList();
+    // 获取未评价订单
+    if (this.data.status == 0) {
+      this.getNotAppraiseList();
+    }
   },
 
   /**

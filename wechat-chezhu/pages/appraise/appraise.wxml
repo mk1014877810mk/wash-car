@@ -3,26 +3,52 @@
   <!-- 头部 -->
   <view class='top'>
     <view class='appraise-title'>
-      <text class='title'>待评价订单</text>
+      <text class='title'>我的订单</text>
+      <text class='second-title' bindtap='checkStatus'>{{status=='1'?'待评价订单':'未完成订单'}}</text>
     </view>
   </view>
   <!-- 内容 -->
   <view class='bottom'>
-    <view wx:for='{{notAppraiseList}}' wx:key='{{index}}' class='appraise-list'>
-      <view class='appraise-title'>
-        <text class='appraise-name'>{{item.vehicle_plate}}</text>
-        <text class='appraise-num' data-order_id='{{item.o_id}}' bindtap='showOrHideModal'>点击评价</text>
+    <!-- 待评价订单列表 -->
+    <view wx:if='{{status==0}}'>
+      <view wx:for='{{notAppraiseList}}' wx:key='{{index}}' class='appraise-list'>
+        <view class='appraise-title'>
+          <text class='appraise-name'>{{item.vehicle_plate}}</text>
+          <text class='appraise-num' data-order_id='{{item.o_id}}' bindtap='showOrHideModal'>点击评价</text>
+        </view>
+        <view class='appraise-another-info'>
+          <text>{{item.time}}</text>
+        </view>
+        <view class='appraise-tips'>
+          <view class='tips-content'>{{item.parking_address}}</view>
+        </view>
       </view>
-      <view class='appraise-another-info'>
-        <text>{{item.add_time.slice(0,16)}}</text>
+      <view class='no-list' wx:if='{{notAppraiseList.length==0}}'>当前无未评价订单</view>
+    </view>
+    <!-- 当前未完成的订单列表 -->
+    <view class='order-list' wx:if='{{status==1}}'>
+      <view class='order-list-item' bindtap='goOrderForm' data-status='{{item.order_status}}' data-order_id='{{item.o_id}}' wx:for='{{notOverOrderList}}' wx:key='{{index}}'>
+        <view class='order-title'>
+          <text class='order-name'>{{item.vehicle_plate}}</text>
+          <text hidden='{{item.order_status!=1}}' class='order-num'>未付款</text>
+          <text hidden='{{item.order_status!=2}}' class='order-num'>等待接单</text>
+          <text hidden='{{item.order_status!=3}}' class='order-num'>已接单</text>
+          <text hidden='{{item.order_status!=4}}' class='order-num'>清洁中</text>
+          <text hidden='{{item.order_status!=5}}' class='order-num'>待评价</text>
+          <text hidden='{{item.order_status!=6}}' class='order-num'>已评价</text>
+        </view>
+        <view class='order-another-info'>
+          <text>{{item.time}}</text>
+        </view>
+        <view class='order-tips'>
+          <view class='tips-content'>{{item.parking_address}}</view>
+        </view>
       </view>
-      <view class='appraise-tips'>
-        <view class='tips-content'>{{item.parking_address}}</view>
-      </view>
+      <view class='no-list' wx:if='{{notOverOrderList.length==0}}'>当前无未完成订单</view>
     </view>
   </view>
   <!-- tips -->
-  <view class='tips' hidden='{{notAppraiseList.length<loadInfo.limit}}'>{{flag?'加载中...':'没有更多数据了'}}</view>
+  <view class='tips' hidden='{{notAppraiseList.length<loadInfo.limit||notOverOrderList.length<loadInfo.limit}}'>{{flag?'加载中...':'没有更多数据了'}}</view>
 </view>
 
 <!-- model -->

@@ -1,12 +1,12 @@
 /**index.wxss**/
 
-.box{
+.box {
   padding-bottom: 200rpx;
 }
 
-.box .top .swiper {
+.box .top swiper {
   width: 100%;
-  height: 150rpx;
+  height: 50vw;
 }
 
 .box .top image {
@@ -17,7 +17,7 @@
 /* 提示 */
 
 .box .index-tips {
-  margin-top: 30rpx;
+  margin: 5rpx 0;
   padding: 30rpx;
   text-align: center;
   font-size: 30rpx;
@@ -28,81 +28,120 @@
   color: red;
 }
 
-/* 未完成订单展示 */
+/* 类型列表 */
 
-.box .order-list{
-  padding: 0 30rpx;
+.box .order-type {
+  background-color: #fff;
 }
 
-.box .order-list .order-list-item {
-  margin-top: 40rpx;
-  font-size: 30rpx;
-  color: #666;
-  padding: 40rpx 40rpx 50rpx;
-  box-shadow: 0 0 8rpx 6rpx #dedede;
-  border-radius: 10rpx;
+.box .order-type .order-type-list {
+  display: flex;
+  padding: 30rpx;
+  height: 220rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
 }
 
-.box .order-list .order-list-item .order-title {
+.box .order-type .order-type-list .type-left {
+  width: 25%;
+}
+
+.box .order-type .order-type-list .type-left image {
+  width: 100%;
+  height: 160rpx;
+}
+
+.box .order-type .order-type-list .type-right {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 75%;
+  margin-left: 30rpx;
 }
 
-.box .order-list .order-list-item .order-title .order-name {
-  font-size: 40rpx;
-  color: #000;
+.box .order-type .order-type-list .type-right .type-right-left {
+  width: 65%;
+}
+
+.box .order-type .order-type-list .type-right .type-right-left .left-title {
+  font-size: 36rpx;
   font-weight: 600;
+  line-height: 40rpx;
 }
 
-.box .order-list .order-list-item .order-title .order-num {
+.box .order-type .order-type-list .type-right .type-right-left .price-num {
+  font-size: 32rpx;
   color: red;
+  line-height: 60rpx;
 }
 
-.box .order-list .order-list-item .order-another-info {
-  padding: 20rpx 0;
+.box .order-type .order-type-list .type-right .type-right-left .price-text {
+  color: #999;
+  font-size: 30rpx;
 }
 
-.box .order-list .order-list-item .order-another-info>text {
-  margin-right: 30rpx;
+.box .order-type .order-type-list .type-right .type-right-right {
+  text-align: center;
+  font-size: 30rpx;
+  color: #999;
+  width: 35%;
 }
 
-.box .order-list .order-list-item .order-tips{
-  margin-top: 30rpx;
-}
-
-
-/* 我要预约 */
-.box .button{
-  margin-top: 60rpx;
-}
-
-.box .button.need-margintop {
-  margin-top: 200rpx;
-}
-
-.box .button button {
-  width: 90vw;
-  background-color: rgb(255, 170, 44);
+.box .order-type .order-type-list .type-right .type-right-right text {
+  display: inline-block;
   color: #fff;
+  padding: 10rpx 20rpx;
+  font-size: 36rpx;
+  background-color: rgb(255, 170, 44);
+  border-radius: 10rpx;
+  margin-bottom: 10rpx;
 }
 
-/* 分享、我的 */
-.box .own-info{
+/* 底部导航栏 */
+
+.box .own-info {
   position: fixed;
   right: 0;
   bottom: 0;
   z-index: 1;
   width: 100%;
-  height: 150rpx;
-  background-color: rgba(243, 243, 243, 1);
-  text-align: right;
-  padding-top: 20rpx;
-  box-sizing: border-box;
+  height: 110rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50rpx;
 }
-.box .own-info image{
-  width: 70rpx;
-  margin-right: 50rpx;
+
+.box .own-info .my-order {
+  width: 75%;
+  line-height: 110rpx;
+  text-align: center;
+  padding-left: 50rpx;
+  box-sizing: border-box;
+  background-color: rgb(255, 170, 44);
+  font-size: 34rpx;
+  color: #fff;
+}
+
+.box .own-info button {
+  width: 6%;
+  background-color: transparent;
+  transform: translateX(32rpx);
+}
+
+.box .own-info button::after{
+  border: none;
+}
+
+.box .own-info button>image{
+  width: 40rpx;
+  transform: translate(-20rpx,8rpx);
+}
+
+.box .own-info>image {
+  width: 6%;
+  margin-left: 50rpx;
 }
 
 /* model */
@@ -172,4 +211,3 @@
   right: 50%;
   transform: translateX(115%) rotate(45deg);
 }
-

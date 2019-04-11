@@ -1,4 +1,5 @@
-const ajaxUrl = `http://172.16.1.168/carWash/web/`;
+// const ajaxUrl = `http://teng.com/carWash/web/`;
+const ajaxUrl = `https://xc.100uv.cn/carWash/web/`;
 
 const requestApi = (url, method, data, complete) => {
   const header = method == 'post' ? {
@@ -158,17 +159,22 @@ export default {
   getUserInfo: data => requestApi('car-waher/info', 'get', data),
 
   /**
-   * money
+   * myMoney
    */
+  // 获取我的钱包数据
   getMyMoney: data => requestApi('car-waher/wallet', 'get', data),
+  // 提现
+  getMoneyToMyself: data => requestApi('withdraw', 'post', data),
 
   /**
    * bill
    */
+  // 获取账单信息
   getBillList: data => requestApi('car-waher/bill', 'post', data),
 
   /**
    * myLastData
    */
+  // 获取洗车记录
   getLastDataList: data => requestApi('car-waher/car-wash-record', 'get', data),
 }

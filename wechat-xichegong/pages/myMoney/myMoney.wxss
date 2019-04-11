@@ -2,7 +2,7 @@
 
 page {
   color: #333;
-  background-color:rgb(244, 246, 249);
+  background-color: rgb(244, 246, 249);
 }
 
 .box .header {
@@ -15,7 +15,7 @@ page {
   width: 180rpx;
 }
 
-.box .header view{
+.box .header view {
   font-size: 50rpx;
   font-weight: 600;
 }
@@ -81,4 +81,75 @@ page {
 .box .body .bill text:nth-last-child(1),
 .box .body .deposit text:nth-last-child(1) {
   width: 10%;
+}
+
+/* 提现模态框 */
+
+.model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.model .model-content {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  padding: 50rpx;
+  border-radius: 8rpx;
+  background-color: #fff;
+  text-align: center;
+}
+
+.model .model-content view.title{
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.model .model-content .input{
+  width: 350rpx;
+  color: #333;
+  border-bottom: 1rpx solid #000;
+  margin: 0 auto;
+  font-weight: 600;
+  font-size: 34rpx;
+}
+
+.model .model-content .input input{
+  display: inline-block;
+  padding-left: 4rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  width: 300rpx;
+  margin-bottom: -12rpx;
+  text-align: left;
+}
+
+.model .model-content .canto{
+  width: 350rpx;
+  text-align: left;
+  font-size: 26rpx;
+  color: #999;
+  margin: 20rpx auto;
+}
+
+.model .model-content view.submit{
+  width: 50%;
+  padding: 10rpx 20rpx;
+  font-size: 32rpx;
+  background-color: rgba(255, 170, 44, 1);
+  color: #fff;
+  border-radius: 4rpx;
+  margin: 30rpx auto 0;
+}
+
+.model .model-content .disabled{
+  background-color: #ccc!important;
 }

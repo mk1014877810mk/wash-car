@@ -6,7 +6,8 @@ Page({
    */
   data: {
     notAppraiseCount: 0, // 未评价订单数量
-    modelHide: true, // 是否显示模态框
+    typeList: [], // 类型列表
+    modelHide: false, // 是否显示模态框
     notOverOrderList: [], // 未完成订单列表
   },
   /**
@@ -21,23 +22,21 @@ Page({
    */
   onReady: function() {
     const that = this;
-    let tempNum = 200;
     let u_id = app.globalData.u_id;
+    let agent_id = app.globalData.agent_id;
 
-    function _fun() {
-      if (!u_id) {
-        u_id = app.globalData.u_id;
-      } else {
-        tempNum = tempNum >= 5000 ? 5000 : tempNum + 500;
-        that.getNotFinishOrder(u_id);
-        that.getNotAppraiseList(u_id);
-      }
-    };
     ! function _loop() {
-      _fun();
+      if (!u_id || !agent_id) {
+        u_id = app.globalData.u_id;
+        agent_id = app.globalData.agent_id;
+      } else {
+        that.getNotAppraiseList(u_id);
+        that.getCurrentServerType();
+        return;
+      }
       setTimeout(() => {
         _loop();
-      }, tempNum)
+      }, 200)
     }();
   },
   // 获取未评价订单
@@ -62,29 +61,25 @@ Page({
       }
     });
   },
-
-  getNotFinishOrder(u_id) {
-    app.request.getNotFinishOrder({
+  // 获取服务类型
+  getCurrentServerType() {
+    app.request.getCurrentServerType({
       data: {
-        u_id,
+        agent_id: app.globalData.agent_id
       },
       success: res => {
-        // console.log('未完成订单', res);
+        // console.log('代理商类型', res);
         if (res.status == 1000) {
           res.data.forEach(el => {
-            el.time = el.add_time.slice(0, 16);
+            el.service_thumb = app.request.ajaxUrl + el.service_thumb
           });
           this.setData({
-            notOverOrderList: res.data
-          })
-        } else if (res.status == 1006) {
-          this.setData({
-            notOverOrderList: []
-          })
+            typeList: res.data
+          });
         }
       },
       fail: err => {
-        console.log('首页未完成订单获取失败', err);
+        console.log('获取当前供应商类型失败', err);
       }
     })
   },
@@ -95,20 +90,17 @@ Page({
     });
   },
 
-  goAppraise() {
+  goAppraise(e) {
+    if (!app.globalData.u_id) {
+      app.request.needToLogin();
+      return;
+    }
+    const status = e.target.id == 'my_order' ? '1' : '';
     wx.navigateTo({
-      url: '/pages/appraise/appraise',
+      url: '/pages/appraise/appraise?status=' + status,
     });
   },
 
-  goOrderForm(e) {
-    const status = e.currentTarget.dataset.status;
-    const order_id = e.currentTarget.dataset.order_id;
-    if (status != 1) return;
-    wx.navigateTo({
-      url: '../orderForm/orderForm?order_id=' + order_id
-    });
-  },
 
   goApply() {
     if (!app.globalData.u_id) {
@@ -121,13 +113,17 @@ Page({
     this.hideModel();
   },
 
-  goAppointment() {
+  goAppointment(e) {
     if (!app.globalData.u_id) {
       app.request.needToLogin();
       return;
     }
+    const title = e.currentTarget.dataset.title;
+    const type_id = e.currentTarget.dataset.type_id;
+    const target = e.target.id == 'order_btn' ? '1' : '0';
+    const r_id = e.currentTarget.dataset.r_id;
     wx.navigateTo({
-      url: '../appointment/appointment',
+      url: '../appointment/appointment?type_id=' + type_id + '&title=' + title + '&r_id=' + r_id + '&target=' + target,
     });
   },
 
@@ -149,7 +145,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    const u_id = app.globalData.u_id;
+    u_id && this.getNotAppraiseList(u_id);
   },
 
   /**

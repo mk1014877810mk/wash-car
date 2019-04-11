@@ -37,6 +37,7 @@ App({
                       // console.log('发送用户位置信息', res2);
                       if (res2.status == 1000 || res2.status == 40007) {
                         console.log('位置发送后台成功');
+                        this.globalData.agent_id = res2.data;
                       }
                     },
                     fail: err => {
@@ -92,5 +93,6 @@ App({
   globalData: {
     userInfo: '',
     u_id: '',
+    agent_id: '', // 供应商id
   }
 })

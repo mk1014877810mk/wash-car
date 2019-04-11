@@ -20,10 +20,22 @@
       <text>账单</text>
       <text>></text>
     </navigator>
-    <navigator class='deposit'>
+    <view class='deposit' bindtap='showOrHideModel'>
       <image mode='widthFix' src='/images/deposit.png'></image>
       <text>提现</text>
       <text>></text>
-    </navigator>
+    </view>
+  </view>
+  <!-- 提现模态框 -->
+  <view class='model' hidden='{{hideModel}}' bindtap='showOrHideModel'>
+    <view class='model-content' catchtap='stopPropgation'>
+      <view class='title'>提现</view>
+      <view class='input'>
+        ￥
+        <input type="number" placeholder-style='text-align:left;color:#666;font-weight:400;' placeholder='请输入金额' bindinput='bindInput'></input>
+      </view>
+      <view class='canto'>可提现金额：{{money.wallet_balance}}元</view>
+      <view class='submit {{canSubmit?"":"disabled"}}' bindtap='getMoneyToMyself'>确定</view>
+    </view>
   </view>
 </view>

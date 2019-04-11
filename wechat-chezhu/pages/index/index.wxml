@@ -16,39 +16,35 @@
     <view wx:if='{{notAppraiseCount!=0}}'>您有{{notAppraiseCount}}个订单待评价，
       <text bindtap='goAppraise'>去评价</text>
     </view>
+    <view wx:else>当前记录良好，请继续保持！</view>
   </view>
 
-  <!-- 当前未完成的订单列表 -->
-  <view class='order-list'>
-
-    <view class='order-list-item' bindtap='goOrderForm' data-status='{{item.order_status}}' data-order_id='{{item.o_id}}' wx:for='{{notOverOrderList}}' wx:key='{{index}}'>
-      <view class='order-title'>
-        <text class='order-name'>{{item.vehicle_plate}}</text>
-        <text hidden='{{item.order_status!=1}}' class='order-num'>未付款</text>
-        <text hidden='{{item.order_status!=2}}' class='order-num'>等待接单</text>
-        <text hidden='{{item.order_status!=3}}' class='order-num'>已接单</text>
-        <text hidden='{{item.order_status!=4}}' class='order-num'>清洁中</text>
-        <text hidden='{{item.order_status!=5}}' class='order-num'>待评价</text>
-        <text hidden='{{item.order_status!=6}}' class='order-num'>已评价</text>
+  <!-- 订单类型列表 -->
+  <view class='order-type'>
+    <view class='order-type-list' wx:for='{{typeList}}' wx:key='{{index}}' bindtap='goAppointment' data-type_id='{{item.project_name}}' data-title='{{item.service_name}}' data-r_id='{{item.r_id}}'>
+      <view class='type-left'>
+        <image mode='aspectFill' src='{{item.service_thumb}}'></image>
       </view>
-      <view class='order-another-info'>
-        <text>{{item.time}}</text>
-      </view>
-      <view class='order-tips'>
-        <view class='tips-content'>{{item.parking_address}}</view>
+      <view class='type-right'>
+        <view class='type-right-left'>
+          <view class='left-title one-text-cut'>{{item.service_name}}</view>
+          <view class='price-num'>￥{{item.project_price}}元</view>
+          <view class='price-text'>门市价：{{item.store_price}}元</view>
+        </view>
+        <view class='type-right-right'>
+          <text id='order_btn'>预约</text>
+          <view>已预约{{item.reservation_number}}人</view>
+        </view>
       </view>
     </view>
   </view>
 
-  <!-- 我要预约按钮 -->
-  <view class='button {{notOverOrderList.length<=0?"need-margintop":""}}'>
-    <button bindtap='goAppointment'>{{notOverOrderList.length
-      <=0? "我要预约": "继续预约"}}</button>
-  </view>
-
   <!-- nav -->
   <view class='own-info'>
-    <image mode='widthFix' bindtap='share' src='/images/share.png'></image>
+    <text class='my-order' id='my_order' bindtap='goAppraise'>我的订单</text>
+    <button open-type='share'>
+      <image mode='widthFix' bindtap='share' src='/images/share.png'></image>
+    </button>
     <image mode='widthFix' bindtap='goMine' src='/images/user.png'></image>
   </view>
 </view>

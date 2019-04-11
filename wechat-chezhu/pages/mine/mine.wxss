@@ -45,24 +45,26 @@ page {
 .box .list>view {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100rpx;
   padding: 10rpx;
 }
 
 .box .list>view:nth-child(1) image {
-  flex: 0.8;
+  flex: 0.7;
   height: 70rpx;
 }
 
 .box .list>view:nth-child(2) image {
-  flex: 0.8;
-  height: 70rpx;
+  flex: 0.7;
+  height: 90rpx;
+  margin-top: 10rpx;
 }
 
 .box .list>view:nth-child(3) image {
-  flex: 0.8;
-  height: 50rpx;
+  flex: 0.7;
+  height: 60rpx;
 }
 
 .box .list>view text {

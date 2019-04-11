@@ -1,9 +1,16 @@
 /**app.wxss**/
-page{
+
+.one-text-cut {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+page {
   background-color: rgba(243, 243, 243, 1);
 }
 
-view.tips{
+view.tips {
   text-align: center;
   font-size: 28rpx;
   padding: 20rpx;

@@ -14,12 +14,12 @@
       <text class='title'>车辆信息</text>
       <text class='arrow'>></text>
     </view>
-    <view class='my-ticket' bindtap='goMyTicket'>
+    <view class='my-ticket' bindtap='goMyTicket' style='display:none;'>
       <image mode='scaleToFill' src='/images/ticket.png'></image>
       <text class='title'>我的卡券</text>
       <text class='arrow'>></text>
     </view>
-    <view class='last-data' bindtap='goLastData'> 
+    <view class='last-data' bindtap='goLastData'>
       <image mode='scaleToFill' src='/images/last-data.png'></image>
       <text class='title'>洗车记录</text>
       <text class='arrow'>></text>

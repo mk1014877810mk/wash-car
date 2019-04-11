@@ -2,34 +2,51 @@
 <!-- 洗车介绍 -->
 <view class='enter-model' hidden='{{hideEnterModel}}'>
   <view class='enter-model-content'>
-    <image mode='scaleToFill' src='/images/interduce.png'></image>
+    <image mode='widthFix' src='{{modelInfo.imgSrc}}'></image>
     <view class='enter-content'>
-      <view class='content-list'>
-        服务内容：车身清洗+轮毂清洗+内饰清洗
-      </view>
-      <view class='content-list'>
-        服务时间：15 ~ 20 分钟
-      </view>
-      <view class='content-list'>
-        服务效果：车身洁净，无无债
-      </view>
-      <view class='content-list'>
-        清洗原理：热分解原理
-      </view>
-      <view class='content-list'>
-        服务介绍：采用高压蒸汽洗车法，蒸汽温度在40-60度左右（可调节），高压热蒸汽不仅可消毒又可去污，有独特的热分解功能，能迅速软化泥沙、鸟粪、油渍、污渍等而又不伤车漆。
-      </view>
-      <view class='content-list'>
-        服务流程：一喷二冲三擦四养
+      <view class='content-list' wx:for='{{modelInfo.textContentArr}}' wx:key='{{index}}'>
+        {{item}}
       </view>
     </view>
   </view>
   <!-- 下一步按钮 -->
-  <view class='model-next-btn' bindtap='hideEnterModel'>下一步</view>
+  <view class='model-next-btn' bindtap='hideEnterModel'>开始预约</view>
 </view>
 
 <!-- 主页面 -->
 <view class='box'>
+  <!-- 服务类型 -->
+  <view class='item'>
+    <view class='content-title'>
+      <text>服务类型</text>
+    </view>
+    <view class='content-items {{hasType?"gray":"red"}}' bindtap='showTypeModel'>{{typeText}}</view>
+    <!-- 服务类型模态框 -->
+    <view class='serve-type-model' hidden='{{hideServeTypeModel}}' catchtap='showOrHideTypeModel'>
+      <view class='model-content' catchtap='stopPropgation'>
+        <view class='title'>选择服务类型</view>
+        <view class='order-type' wx:if='{{typeList.length!=0}}'>
+          <view class='order-type-list' wx:for='{{typeList}}' wx:key='{{index}}'>
+            <view class='type-left'>
+              <image mode='aspectFill' src='{{item.service_thumb}}'></image>
+            </view>
+            <view class='type-right'>
+              <view class='type-right-left'>
+                <view class='left-title one-text-cut'>{{item.service_name}}</view>
+                <view class='price-num'>￥{{item.project_price}}元</view>
+                <view class='price-text'>门市价：{{item.store_price}}元</view>
+              </view>
+              <view class='type-right-right'>
+                <view class='btn' data-typeid='{{item.project_name}}' data-index='{{index}}' catchtap='makeSure'>确定</view>
+                <view>已预约{{item.reservation_number}}人</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
   <!-- 服务车辆 -->
   <view class='item'>
     <view class='content-title'>
@@ -91,5 +108,8 @@
       <input type='number' maxlength='11' bindinput='bindinput'></input>
     </view>
   </view>
-  <view class='next-btn' bindtap='goOrderForm'>提交订单</view>
+  <!-- 提交订单 -->
+  <view class='submit-area'>
+    <view class='next-btn' bindtap='goOrderForm'>提交订单</view>
+  </view>
 </view>

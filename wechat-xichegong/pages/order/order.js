@@ -22,7 +22,7 @@ Page({
       if (app.common.startLoad(app)) {
         wx.showLoading();
         clearInterval(timer);
-        this.getOwnOrderList();
+        this.getOwnOrderList(true);
         this.setData({
           bindInfo: true
         })
@@ -37,7 +37,7 @@ Page({
 
   },
 
-  getOwnOrderList(callback) {
+  getOwnOrderList(init, callback) { //params:init=>是否初始化列表
     app.request.getOwnOrderList({
       x_id: app.globalData.x_id,
       page: this.data.page,
@@ -45,6 +45,11 @@ Page({
     }).then(res => {
       // console.log('已接订单', res);
       if (res.status == 1000) {
+        if (init) {
+          this.setData({
+            orderList: []
+          });
+        }
         res.data.forEach(el => {
           el.time = el.add_time.slice(0, 16);
         })
@@ -87,20 +92,22 @@ Page({
       order_id: e.currentTarget.dataset.order_id
     }).then(res => {
       // console.log('改变订单状态', res);
-      if(res.status==1000){
+      if (res.status == 1000) {
         const tempPage = this.data.page;
         const tempLimit = this.data.limit;
         this.setData({
           page: 1,
-          limit: tempPage * tempLimit,
-          orderList:[]
+          limit: tempPage * tempLimit
         });
-        this.getOwnOrderList(()=>{
+        this.getOwnOrderList(true,() => {
           this.setData({
             page: tempPage,
             limit: tempLimit
           });
         })
+      } else if (res.status == 1001) {
+        app.request.showTips('该订单已被别人抢走啦！');
+        this.getOwnOrderList(true);
       }
     }).catch(err => {
       console.log('改变订单状态失败', err);
@@ -111,10 +118,7 @@ Page({
    */
   onShow: function() {
     if (this.data.bindInfo) {
-      this.setData({
-        orderList: []
-      });
-      this.getOwnOrderList();
+      this.getOwnOrderList(true);
     }
   },
 

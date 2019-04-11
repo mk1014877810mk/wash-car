@@ -1,4 +1,4 @@
-// export const ajaxUrl = `http://172.16.1.168/carWash/web/`;
+// export const ajaxUrl = `http://teng.com/carWash/web/`;
 export const ajaxUrl = `https://xc.100uv.cn/carWash/web/`;
 const requestApi = (reqObj) => {
   const method = reqObj.method || 'get';
@@ -133,17 +133,18 @@ export const sendUserPosition = reqObj => {
 /**
  * index
  */
+// 获取当前供应商服务类型
 
-// 获取用户未完成的订单
-export const getNotFinishOrder = reqObj => {
+export const getCurrentServerType = reqObj => {
   requestApi({
-    url: `owner/order-undone`,
+    url: `owner/service-type`,
     method: 'get',
     data: reqObj.data,
     success: reqObj.success,
     fail: reqObj.fail
   });
 }
+
 
 
 /**
@@ -191,6 +192,17 @@ export const submitApplyData = reqObj => {
 /**
  * appointment
  */
+// 获取洗车详细信息
+export const getWashCarInfo = reqObj => {
+  wx.showLoading();
+  requestApi({
+    url: 'owner/propag',
+    method: 'get',
+    data: reqObj.data,
+    success: reqObj.success,
+    fail: reqObj.fail
+  });
+}
 // 获取车牌信息
 export const getCarList = reqObj => {
   wx.showLoading();
@@ -255,6 +267,25 @@ export const getOrderInfo = reqObj => {
   });
 }
 
+export const payMoney = reqObj => {
+  requestApi({
+    url: `pay`,
+    method: 'post',
+    data: reqObj.data,
+    success: reqObj.success,
+    fail: reqObj.fail
+  });
+}
+
+export const changePayStatus = reqObj => {
+  requestApi({
+    url: `pay/modify-order-status`,
+    method: 'post',
+    data: reqObj.data,
+    complete: reqObj.complete
+  });
+}
+
 
 /**
  * mine
@@ -288,6 +319,16 @@ export const delCarInfo = reqObj => {
 /**
  * appraise
  */
+// 获取未完成
+export const getNotFinishOrder = reqObj => {
+  requestApi({
+    url: `owner/order-undone`,
+    method: 'get',
+    data: reqObj.data,
+    success: reqObj.success,
+    fail: reqObj.fail
+  });
+}
 // 查询未评价列表
 export const getNotAppraiseList = reqObj => {
   requestApi({

@@ -2,17 +2,21 @@
 
 /* 洗车介绍 */
 
+page {
+  background-color: #fff;
+}
+
 .enter-model {
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #fff;
   box-sizing: border-box;
-  z-index: 2;
+  z-index: 10;
   overflow-y: scroll;
   padding-bottom: 100rpx;
+  background-color: #fff;
 }
 
 ::-webkit-scrollbar {
@@ -53,7 +57,7 @@
 /* 主页面 */
 
 .box {
-  padding: 20rpx 30rpx 60rpx;
+  padding: 20rpx 30rpx 150rpx;
   margin-top: 20rpx;
   background-color: #fff;
 }
@@ -79,6 +83,160 @@
 
 .box .item .content-items {
   text-align: center;
+}
+
+/* 服务类型 */
+
+.box .item .content-items.gray {
+  position: relative;
+  text-align: left;
+  font-weight: normal;
+  font-size: 30rpx;
+  color: #666;
+  line-height: 40rpx;
+  padding: 10rpx 0 6rpx 20rpx;
+}
+
+.box .item .content-items.gray::before {
+  content: '';
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #666;
+  border-radius: 50%;
+}
+
+/* 类型列表 */
+
+.box .order-type {
+  background-color: #fff;
+}
+
+.box .order-type .order-type-list {
+  display: flex;
+  padding: 30rpx;
+  height: 190rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+
+/* 服务类型模态框 */
+
+.red {
+  position: relative;
+  text-align: left !important;
+  font-weight: normal;
+  font-size: 30rpx;
+  color: red;
+  line-height: 40rpx;
+  padding: 10rpx 0 6rpx 20rpx;
+}
+
+.red::before {
+  content: '';
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: red;
+  border-radius: 50%;
+}
+
+.box .serve-type-model {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+}
+
+.box .serve-type-model .model-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 60%;
+  background-color: #fff;
+  padding: 30rpx;
+  box-sizing: border-box;
+  border-radius: 10rpx;
+}
+
+.box .serve-type-model .model-content .title {
+  text-align: center;
+  padding-bottom: 30rpx;
+  font-size: 38rpx;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+}
+
+.box .serve-type-model .order-type {
+  height: 85%;
+  overflow-y: scroll;
+}
+
+.box .order-type .order-type-list .type-left {
+  width: 25%;
+}
+
+.box .order-type .order-type-list .type-left image {
+  width: 100%;
+  height: 130rpx;
+}
+
+.box .order-type .order-type-list .type-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+  height: 130rpx;
+  margin-left: 30rpx;
+}
+
+.box .order-type .order-type-list .type-right .type-right-left {
+  width: 65%;
+}
+
+.box .order-type .order-type-list .type-right .type-right-left .left-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 40rpx;
+}
+
+.box .order-type .order-type-list .type-right .type-right-left .price-num {
+  font-size: 28rpx;
+  color: red;
+  line-height: 60rpx;
+}
+
+.box .order-type .order-type-list .type-right .type-right-left .price-text {
+  color: #999;
+  font-size: 26rpx;
+}
+
+.box .order-type .order-type-list .type-right .type-right-right {
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+  width: 35%;
+}
+
+.box .order-type .order-type-list .type-right .type-right-right view.btn {
+  display: inline-block;
+  color: #fff;
+  padding: 10rpx 20rpx;
+  font-size: 36rpx;
+  background-color: rgb(255, 170, 44);
+  border-radius: 10rpx;
+  margin-bottom: 10rpx;
 }
 
 /* 服务车辆 */
@@ -183,9 +341,18 @@
 
 /* 提交订单按钮 */
 
-.box .next-btn {
+.box .submit-area {
+  position: fixed;
+  padding: 30rpx 0 5vh;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+}
+
+.box .submit-area .next-btn {
   width: 90%;
-  margin: 80rpx auto 0;
+  margin: 0 auto;
   padding: 20rpx;
   color: #fff;
   background-color: rgb(255, 170, 44);

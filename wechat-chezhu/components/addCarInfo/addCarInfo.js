@@ -1,5 +1,6 @@
 // components/addCarInfo/addCarInfo.js
 const app = getApp();
+const carNumReg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
 let carInfoFlag = true;
 Component({
   /**
@@ -69,26 +70,24 @@ Component({
     },
 
     commitCarInfo() {
-
+      console.log(carNumReg.test(this.data.carInfo.carNum))
       if (((this.data.carInfo.carNum).trim()).length <= 0) {
-        app.request.showTips('请填写车牌号');
-        return;
+        return app.request.showTips('请填写车牌号');
+      } else if (!carNumReg.test(this.data.carInfo.carNum)) {
+        return app.request.showTips('请填写正确的车牌号');
       } else if (((this.data.carInfo.carType).trim()).length <= 0) {
-        app.request.showTips('请填写车型号');
-        return;
+        return app.request.showTips('请填写车型号');
       } else if (((this.data.carInfo.carBox).trim()).length <= 0) {
-        app.request.showTips('请填写车厢型');
-        return;
+        return app.request.showTips('请填写车厢型');
       } else if (((this.data.carInfo.carColor).trim()).length <= 0) {
-        app.request.showTips('请填写车颜色');
-        return;
+        return app.request.showTips('请填写车颜色');
       }
-      
-      if (!carInfoFlag) {
-        app.request.showTips('车辆信息添加中...');
-        return;
-      }
+
+      if (!carInfoFlag) return app.request.showTips('车辆信息添加中...');
       carInfoFlag = false;
+      wx.showLoading({
+        title: '提交中...',
+      });
       const data = {
         vehicle_plate: this.data.carInfo.carNum,
         vehicle_type: this.data.carInfo.carType,
@@ -107,12 +106,16 @@ Component({
           }
         },
         fail: err => {
+          app.request.showTips('添加失败');
           console.log('车辆信息添加失败', err);
         },
         complete: () => {
           setTimeout(() => {
             carInfoFlag = true;
-          }, 1000)
+          }, 1000);
+          setTimeout(() => {
+            wx.hideLoading();
+          }, 2000);
         }
       })
     },
