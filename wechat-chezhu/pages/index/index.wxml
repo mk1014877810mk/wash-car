@@ -21,15 +21,15 @@
 
   <!-- 订单类型列表 -->
   <view class='order-type'>
-    <view class='order-type-list' wx:for='{{typeList}}' wx:key='{{index}}' bindtap='goAppointment' data-type_id='{{item.project_name}}' data-title='{{item.service_name}}' data-r_id='{{item.r_id}}'>
+    <view class='order-type-list' wx:for='{{typeList}}' wx:key='{{index}}' bindtap='goAppointment' data-s_id='{{item.s_id}}' data-title='{{item.service_name}}'>
       <view class='type-left'>
         <image mode='aspectFill' src='{{item.service_thumb}}'></image>
       </view>
       <view class='type-right'>
         <view class='type-right-left'>
           <view class='left-title one-text-cut'>{{item.service_name}}</view>
-          <view class='price-num'>￥{{item.project_price}}元</view>
-          <view class='price-text'>门市价：{{item.store_price}}元</view>
+          <view class='price-num one-text-cut'>￥{{item.project_price}}元</view>
+          <view class='price-text one-text-cut'>门市价：{{item.store_price}}元</view>
         </view>
         <view class='type-right-right'>
           <text id='order_btn'>预约</text>

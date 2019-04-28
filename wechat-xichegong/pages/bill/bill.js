@@ -19,14 +19,30 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
+    wx.showLoading();
     let timer = setInterval(() => {
       if (app.common.startLoad(app)) {
         clearInterval(timer);
         wx.showLoading();
         this.getBillList();
       }
-    }, 500)
+    }, 500);
+    setTimeout(() => {
+      wx.hideLoading();
+      clearInterval(timer);
+      if (!app.common.startLoad(app)) {
+        if (!app.globalData.x_id) {
+          app.request.needToLogin(1091);
+        } else if (!app.globalData.hadBindInfo.phoneNum) {
+          app.request.needToLogin(1093);
+        } else {
+          this.getBillList(()=>{
+            app.request.showTips('请绑定代理商');
+          });
+        }
+      }
+    }, 3000);
   },
 
   /**
@@ -36,7 +52,7 @@ Page({
 
   },
 
-  getBillList() {
+  getBillList(callback) {
     app.request.getBillList({
       x_id: app.globalData.x_id,
       page: this.data.page,
@@ -59,6 +75,7 @@ Page({
           });
         }
       }
+      callback && callback();
     }).catch(err => {
       console.log('账单列表获取失败', err);
     })

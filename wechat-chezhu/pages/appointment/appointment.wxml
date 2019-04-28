@@ -11,6 +11,9 @@
   </view>
   <!-- 下一步按钮 -->
   <view class='model-next-btn' bindtap='hideEnterModel'>开始预约</view>
+  <button open-type='share'>
+    <image mode='widthFix' bindtap='share' src='/images/share.png'></image>
+  </button>
 </view>
 
 <!-- 主页面 -->
@@ -33,11 +36,11 @@
             <view class='type-right'>
               <view class='type-right-left'>
                 <view class='left-title one-text-cut'>{{item.service_name}}</view>
-                <view class='price-num'>￥{{item.project_price}}元</view>
-                <view class='price-text'>门市价：{{item.store_price}}元</view>
+                <view class='price-num one-text-cut'>￥{{item.project_price}}元</view>
+                <view class='price-text one-text-cut'>门市价：{{item.store_price}}元</view>
               </view>
               <view class='type-right-right'>
-                <view class='btn' data-typeid='{{item.project_name}}' data-index='{{index}}' catchtap='makeSure'>确定</view>
+                <view class='btn' data-typeid='{{item.s_id}}' data-index='{{index}}' catchtap='makeSure'>确定</view>
                 <view>已预约{{item.reservation_number}}人</view>
               </view>
             </view>

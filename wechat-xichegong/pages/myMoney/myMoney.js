@@ -16,13 +16,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.showLoading();
     let timer = setInterval(() => {
       if (app.common.startLoad(app)) {
         clearInterval(timer);
         wx.showLoading();
         this.getMyMoney();
       }
-    }, 500)
+    }, 500);
+    setTimeout(() => {
+      wx.hideLoading();
+      clearInterval(timer);
+      if (!app.common.startLoad(app)) {
+        if (!app.globalData.x_id) {
+          app.request.needToLogin(1091);
+        } else if (!app.globalData.hadBindInfo.phoneNum) {
+          app.request.needToLogin(1093);
+        } else {
+          this.getMyMoney(() => {
+            app.request.showTips('请绑定代理商');
+          });
+        }
+      }
+    }, 3000);
   },
 
   /**
@@ -86,13 +102,16 @@ Page({
     })
   },
 
-  stopPropgation(){
+  stopPropgation() {
     return false;
   },
 
-  showOrHideModel(){
+  showOrHideModel() {
     this.setData({
       hideModel: !this.data.hideModel
+    });
+    wx.setNavigationBarTitle({
+      title: this.data.hideModel ? '我的钱包' : '提现',
     });
   },
 

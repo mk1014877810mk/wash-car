@@ -19,46 +19,17 @@ App({
           success: res1 => {
             // console.log('是否为第一次登录检测', res1);
             if (res1.status == 1091) {
-              setTimeout(() => {
-                request.goLogin();
-              }, 500);
+              wx.getSetting({
+                success: res2 => {
+                  if (!res2.authSetting['scope.userInfo']) {
+                    setTimeout(() => {
+                      request.goLogin();
+                    }, 500);
+                  }
+                }
+              });
             } else {
               this.globalData.u_id = res1.data.u_id;
-              wx.getLocation({
-                success: res2 => {
-                  // console.log('当前地址', res2);
-                  request.sendUserPosition({
-                    data: {
-                      u_id: res1.data.u_id,
-                      longitude: res2.longitude,
-                      latitude: res2.latitude
-                    },
-                    success: res2 => {
-                      // console.log('发送用户位置信息', res2);
-                      if (res2.status == 1000 || res2.status == 40007) {
-                        console.log('位置发送后台成功');
-                        this.globalData.agent_id = res2.data;
-                      }
-                    },
-                    fail: err => {
-                      console.log('发送用户位置信息失败', err);
-                    }
-                  })
-                },
-                fail: err => {
-                  wx.getSetting({
-                    success: res => {
-                      if (!res.authSetting['scope.userLocation']) {
-                        request.reGetPosition(this.globalData.u_id);
-                      }
-                    },
-                    fail: err => {
-                      console.log('获取用户地理位置权限失败'.err);
-                    }
-                  })
-                }
-              })
-
             }
           },
           fail: err => {

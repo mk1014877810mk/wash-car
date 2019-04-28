@@ -23,12 +23,9 @@ Page({
   onReady: function() {
     const that = this;
     let u_id = app.globalData.u_id;
-    let agent_id = app.globalData.agent_id;
-
     ! function _loop() {
-      if (!u_id || !agent_id) {
+      if (!u_id) {
         u_id = app.globalData.u_id;
-        agent_id = app.globalData.agent_id;
       } else {
         that.getNotAppraiseList(u_id);
         that.getCurrentServerType();
@@ -36,7 +33,7 @@ Page({
       }
       setTimeout(() => {
         _loop();
-      }, 200)
+      }, 200);
     }();
   },
   // 获取未评价订单
@@ -64,11 +61,8 @@ Page({
   // 获取服务类型
   getCurrentServerType() {
     app.request.getCurrentServerType({
-      data: {
-        agent_id: app.globalData.agent_id
-      },
       success: res => {
-        // console.log('代理商类型', res);
+        // console.log('运营商服务类型', res);
         if (res.status == 1000) {
           res.data.forEach(el => {
             el.service_thumb = app.request.ajaxUrl + el.service_thumb
@@ -81,7 +75,7 @@ Page({
       fail: err => {
         console.log('获取当前供应商类型失败', err);
       }
-    })
+    });
   },
 
   hideModel() {
@@ -119,11 +113,10 @@ Page({
       return;
     }
     const title = e.currentTarget.dataset.title;
-    const type_id = e.currentTarget.dataset.type_id;
+    const type_id = e.currentTarget.dataset.s_id;
     const target = e.target.id == 'order_btn' ? '1' : '0';
-    const r_id = e.currentTarget.dataset.r_id;
     wx.navigateTo({
-      url: '../appointment/appointment?type_id=' + type_id + '&title=' + title + '&r_id=' + r_id + '&target=' + target,
+      url: '../appointment/appointment?type_id=' + type_id + '&title=' + title + '&target=' + target
     });
   },
 
@@ -135,10 +128,6 @@ Page({
     wx.navigateTo({
       url: '../mine/mine',
     });
-  },
-
-  share() {
-
   },
 
   /**

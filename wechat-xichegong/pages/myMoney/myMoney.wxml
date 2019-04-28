@@ -29,12 +29,14 @@
   <!-- 提现模态框 -->
   <view class='model' hidden='{{hideModel}}' bindtap='showOrHideModel'>
     <view class='model-content' catchtap='stopPropgation'>
-      <view class='title'>提现</view>
-      <view class='input'>
-        ￥
-        <input type="number" placeholder-style='text-align:left;color:#666;font-weight:400;' placeholder='请输入金额' bindinput='bindInput'></input>
+      <view class='title'>
+        <image mode='widthFix' src='/images/money.png'></image>
       </view>
-      <view class='canto'>可提现金额：{{money.wallet_balance}}元</view>
+      <view class='canto'>可提现：<text> {{money.wallet_balance}}元</text></view>
+      <view class='input'>
+        <text class='input-title'>提现金额 : </text>
+        <input type="number" placeholder-style='text-align:left;color:#666;font-weight:400;' placeholder='大于500的数字' bindinput='bindInput'></input>
+      </view>
       <view class='submit {{canSubmit?"":"disabled"}}' bindtap='getMoneyToMyself'>确定</view>
     </view>
   </view>

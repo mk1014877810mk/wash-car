@@ -17,7 +17,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
+    wx.showLoading();
     let timer = setInterval(() => {
       if (app.common.startLoad(app)) {
         wx.showLoading();
@@ -27,7 +28,20 @@ Page({
           bindInfo: true
         })
       }
-    }, 500)
+    }, 500);
+    setTimeout(() => {
+      wx.hideLoading();
+      clearInterval(timer);
+      if (!app.common.startLoad(app)) {
+        if (!app.globalData.x_id) {
+          app.request.needToLogin(1091);
+        } else if (!app.globalData.hadBindInfo.phoneNum) {
+          app.request.needToLogin(1093);
+        } else {
+          app.request.showTips('请绑定代理商');
+        }
+      }
+    }, 3000);
   },
 
   /**
@@ -52,7 +66,7 @@ Page({
         }
         res.data.forEach(el => {
           el.time = el.add_time.slice(0, 16);
-        })
+        });
         this.setData({
           orderList: this.data.orderList.concat(res.data)
         });
@@ -67,7 +81,9 @@ Page({
           flag: false
         });
         if (this.data.page == 1) {
-          orderList: []
+          this.setData({
+            orderList: []
+          });
         }
       }
     }).catch(err => {

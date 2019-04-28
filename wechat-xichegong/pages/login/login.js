@@ -10,13 +10,13 @@ Page({
     phoneNum: '',
     inputVal: '',
     showModel: false, // 是否显示手机号确认模态框
-    hadLogin: false, // 是否已经提交过用户信息
+    needLogin: true, // 是否已经提交过用户信息
     showCurrent: true // 是否为微信默认手机号
   },
 
   onLoad(options) {
     this.setData({
-      hadLogin: options.status == 1091
+      needLogin: options.status == 1091
     });
   },
 
@@ -27,12 +27,15 @@ Page({
         // console.log(res.code);
         callback && callback(res.code);
       }
-    })
+    });
   },
 
   getUserInfo(e) {
     app.globalData.userInfo = e.detail.userInfo
     this.getCode(code => {
+      wx.showLoading({
+        title: '获取信息中...',
+      });
       this.sendLoginData(code, e.detail.iv, e.detail.encryptedData);
     });
   },
@@ -48,16 +51,20 @@ Page({
       if (res.status == 1000) {
         app.globalData.x_id = res.data.x_id;
         this.setData({
-          hadLogin: true
+          needLogin: false
         });
       }
+      wx.hideLoading();
     }).catch(err => {
+      wx.hideLoading();
       console.log('登录向后台发送个人信息数据失败', err)
-    })
-
+    });
   },
 
   getPhoneNum(code, iv, encryptedData) {
+    wx.showLoading({
+      title: '手机号获取中...',
+    });
     app.request.getPhoneNum({
       code,
       iv,
@@ -65,16 +72,19 @@ Page({
     }).then(res => {
       // console.log('手机号', res);
       if (res.status == 1000) {
-        this.showOrHideModel();
+        // this.showOrHideModel();
         this.setData({
           phoneNum: res.data.phone_number
         });
+        this.sendPhoneNum(res.data.phone_number);
       } else if (res.status == 41003) {
         app.request.showTips('手机号获取失败，请重试!');
       }
+      wx.hideLoading();
     }).catch(err => {
+      wx.hideLoading();
       console.log('手机号获取失败', err);
-    })
+    });
   },
 
 
@@ -87,7 +97,7 @@ Page({
         title: '温馨提示',
         showCancel: false,
         content: '未授权手机号，会导致无法绑定用户,请授权手机号'
-      })
+      });
     } else { // 同意授权
       this.getCode(code => {
         this.getPhoneNum(code, e.detail.iv, e.detail.encryptedData);
@@ -100,13 +110,13 @@ Page({
     this.setData({
       showModel: !this.data.showModel,
       showCurrent: true
-    })
+    });
   },
 
   changeNum() {
     this.setData({
       showCurrent: !this.data.showCurrent
-    })
+    });
   },
 
   inputPhoneNum(e) {
@@ -116,9 +126,9 @@ Page({
   },
 
 
-  sendPhoneNum() {
-    const phoneNum = this.data.showCurrent ? this.data.phoneNum : this.data.inputVal;
-    if (!reg.test(phoneNum)) return app.request.showTips('请输入合法的手机号');
+  sendPhoneNum(phoneNum) {
+    // const phoneNum = this.data.showCurrent ? this.data.phoneNum : this.data.inputVal;
+    // if (!reg.test(phoneNum)) return app.request.showTips('请输入合法的手机号');
 
     app.request.sendPhoneNum({
       x_id: app.globalData.x_id,
@@ -126,9 +136,12 @@ Page({
     }).then(res => {
       // console.log('绑定手机号成功', res);
       if (res.status == 1000) {
-        wx.navigateBack();
-      } else if (res.status == 40004){
-        app.request.showTips('请输入合法的手机号')
+        app.globalData.hadBindInfo.phoneNum = true;
+        app.request.getPosition(app, () => {
+          wx.navigateBack();
+        });
+      } else if (res.status == 40004) {
+        app.request.showTips('请输入合法的手机号');
       }
     }).catch(err => {
       console.log('绑定手机号失败', err);

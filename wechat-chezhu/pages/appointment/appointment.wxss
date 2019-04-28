@@ -37,6 +37,7 @@ page {
   word-break: break-all;
   font-size: 34rpx;
   line-height: 60rpx;
+  text-align:justify;
 }
 
 /* 下一步按钮 */
@@ -49,9 +50,34 @@ page {
   font-size: 46rpx;
   color: #fff;
   background-color: rgb(255, 170, 44);
-  width: 100%;
+  width: 83%;
   padding: 20rpx 0;
   margin: 30rpx 0 0;
+}
+
+.enter-model button {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 17%;
+  background-color: #fff;
+  transform: translateX(32rpx);
+  padding: 0;
+}
+
+.enter-model button::after{
+  border: none;
+}
+
+.enter-model button>image{
+  width: 40rpx;
+  transform: translate(-20rpx,8rpx);
+}
+
+.enter-model image {
+  width: 6%;
+  margin-right: 20rpx;
 }
 
 /* 主页面 */

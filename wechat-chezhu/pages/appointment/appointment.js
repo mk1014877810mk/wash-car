@@ -8,14 +8,17 @@ const minutes = [];
 const minutesObj = [];
 const reg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57]|19[8])[0-9]{8}$/;
 let clickFlag = true; // 提交订单按钮监控
+let scale = false; // 是否为扫码进入
+let n_id = ''; // 扫码进入的推广id
+let hasEnd = false; // 活动是否过期
 Page({
   data: {
     // 刚进来时的宣传页模态框
     hideEnterModel: false,
     modelInfo: {},
+    scaleInfo: {}, // 扫码获取的信息 scaleInfo.user_id为当前活动的代理商id
     // 服务类型模态框
-    type_id: '', // 类型id
-    r_id: '', // 价格id
+    type_id: '', // 类型id  对应接口中的s_id
     typeText: '', // 类型名称
     hideServeTypeModel: true,
     typeList: [],
@@ -39,6 +42,7 @@ Page({
     place: {
       choosed: false, // 是否选择过地址
       hasOrder: true, // 当前地点是否有代理商
+      isinarea: true, // 扫码进入选择的地点是否在代理商服务范围
       agent_id: '', // 代理商id
       msg: '请选择泊车地点',
       address: '',
@@ -51,28 +55,72 @@ Page({
   },
 
   onLoad: function(options) {
-    this.setData({
-      type_id: options.type_id,
-      typeText: options.title,
-      r_id: options.r_id,
-      hideEnterModel: options.target == 1
-    });
-    wx.setNavigationBarTitle({
-      title: options.target == 1 ? '订单' : '服务详情',
-    });
-    this.getCarList();
-    this.initDate();
-    options.target != 1 && this.getWashCarInfo();
+
+    const sence = decodeURIComponent(options.q);
+    // const sence = 'https://xc.100uv.cn/chezhu?n_id=9'
+    const exist = sence.indexOf('n_id'); // 是否存在项目推广价格id
+
+    console.log('options:', options, 'sence:', sence, 'exist:', exist);
+
+    if (exist == -1) { // 用户点击进入
+      this.setData({
+        type_id: options.type_id,
+        typeText: options.title,
+        hideEnterModel: options.target == 1
+      });
+      wx.setNavigationBarTitle({
+        title: options.target == 1 ? '订单' : '服务详情',
+      });
+      this.initDate();
+      options.target == 1 && this.getCarList();
+      options.target != 1 && this.getWashCarInfo();
+    } else { // 用户扫码进入
+      scale = true;
+      n_id = sence.split('?')[1].split('=')[1];
+      wx.setNavigationBarTitle({
+        title: '服务详情',
+      });
+      this.getScaleInfo(n_id);
+      this.initDate();
+    }
+
   },
 
   /**
    * 洗车宣传页介绍
    */
+  // 扫码过去洗车信息
+  getScaleInfo(n_id) {
+    const that = this;
+    app.request.getScaleInfo({
+      data: {
+        n_id
+      },
+      success(res) {
+        // console.log('扫码洗车信息', res);
+        if (res.status == 1000) {
+          const obj = {};
+          obj.imgSrc = app.request.ajaxUrl + res.data.project_image;
+          obj.textContentArr = res.data.content_info.split('&&');
+          obj.agent_id = res.data.user_id
+          that.setData({
+            type_id: res.data.s_id,
+            modelInfo: obj,
+            scaleInfo: res.data,
+            typeText: res.data.service_type.service_name
+          });
+        } else if (res.status == 2001) {
+          hasEnd = true;
+          app.request.showTips('该活动已结束！');
+        }
+      }
+    })
+  },
 
   getWashCarInfo() {
     app.request.getWashCarInfo({
       data: {
-        r_id: this.data.r_id
+        s_id: this.data.type_id
       },
       success: res => {
         // console.log('洗车宣传页数据', res);
@@ -90,11 +138,11 @@ Page({
       }
     })
   },
+
   hideEnterModel() {
-    if (!app.globalData.u_id) {
-      app.request.needToLogin();
-      return;
-    }
+    if (!app.globalData.u_id) return app.request.needToLogin();
+    if (scale && hasEnd) return app.request.showTips('该活动已过期，不可预约');
+    this.getCarList();
     this.setData({
       hideEnterModel: true
     });
@@ -107,9 +155,10 @@ Page({
    * 服务类型
    */
   showTypeModel() {
-    if (!this.data.place.hasOrder) {
-      return app.request.showTips('当前泊车地点无代理商,请重新选择泊车地点');
-    }
+    if (scale) return;
+    // if (!this.data.place.hasOrder) {
+    //   return app.request.showTips('当前泊车地点无代理商,请重新选择泊车地点');
+    // }
     this.showOrHideTypeModel(true);
   },
   stopPropgation() {
@@ -121,11 +170,9 @@ Page({
       hideServeTypeModel: !this.data.hideServeTypeModel
     });
   },
+
   getCurrentServerType() {
     app.request.getCurrentServerType({
-      data: {
-        agent_id: app.globalData.agent_id
-      },
       success: res => {
         // console.log('代理商类型', res);
         if (res.status == 1000) {
@@ -142,13 +189,18 @@ Page({
       }
     })
   },
+
   makeSure(e) {
     const index = e.currentTarget.dataset.index;
     const typeId = e.currentTarget.dataset.typeid;
     this.showOrHideTypeModel();
+    if (this.data.type_id == typeId) return;
     this.setData({
       type_id: typeId,
-      typeText: this.data.typeList[index].service_name
+      typeText: this.data.typeList[index].service_name,
+      'place.choosed': false,
+      'place.msg': '请选择泊车地点',
+      'place.hasOrder': true
     });
   },
 
@@ -176,7 +228,6 @@ Page({
         console.log('车辆信息列表获取失败', err);
       }
     });
-
   },
   addCarNewInfo() {
     this.selectComponent('#add_car_info').showOrHideModel();
@@ -410,59 +461,90 @@ Page({
           'place.longitude': res.longitude,
           'place.msg': res.address + res.name || '请选择泊车地点'
         });
-        app.request.sendUserPosition({
-          data: {
-            u_id: app.globalData.u_id,
-            longitude: res.longitude,
-            latitude: res.latitude,
-            type_id: this.data.type_id
-          },
-          success: res2 => {
-            // console.log('是否在服务范围内', res2);
-            if (res2.status == 1000) {
-              that.setData({
-                hasType: true,
-                'place.hasOrder': true,
-                'place.agent_id': res2.data
-              });
-              app.globalData.agent_id = res2.data;
-
-              app.request.hasPrise({
-                data: {
-                  agent_id: res2.data
-                },
-                success: res3 => {
-                  // console.log('当前区域代理商是否录入价格', res3);
-                  if (res3.status == 1000) {
-                    that.setData({
-                      'place.hasOrder': true,
-                    });
-                  } else if (res3.status == 40007) {
-                    that.setData({
-                      'place.hasOrder': false
-                    });
-                  }
-                }
-              })
-
-            } else if (res2.status == 40007) {
-              app.request.showTips('当前地点无代理商，请重新选择地点');
-              that.setData({
-                'place.hasOrder': false
-              });
-            } else if (res2.status == 40010) {
-              app.request.showTips('当前地点无该服务类型，请重新选择服务类型或地点');
-              that.setData({
-                hasType: false,
-                'place.agent_id': res2.data
-              });
-              app.globalData.agent_id = res2.data;
+        if (scale) { // 扫码进入
+          app.request.isInArea({
+            data: {
+              agent_id: that.data.scaleInfo.user_id,
+              longitude: res.longitude,
+              latitude: res.latitude
+            },
+            success: res2 => {
+              // console.log('对比当前位置是否在固定代理商区域', res2);
+              if (res2.status == 1000) {
+                that.setData({
+                  'place.isinarea': true,
+                  'place.hasOrder': true,
+                  'place.agent_id': that.data.scaleInfo.user_id
+                });
+                app.globalData.agent_id = that.data.scaleInfo.user_id;
+              } else {
+                that.setData({
+                  'place.isinarea': false,
+                  'place.msg': '请重新选择泊车地点'
+                });
+                app.request.showTips('当前选择的泊车地点不在活动服务范围内');
+              }
+            },
+            fail: err => {
+              console.log('对比当前位置是否在固定代理商区域失败', err);
             }
-          },
-          fail: err => {
-            console.log('发送用户位置信息失败', err);
-          }
-        })
+          })
+        } else { // 点击进入
+          app.request.sendUserPosition({
+            data: {
+              u_id: app.globalData.u_id,
+              longitude: res.longitude,
+              latitude: res.latitude,
+              type_id: this.data.type_id
+            },
+            success: res2 => {
+              // console.log('是否在服务范围内', res2);
+              if (res2.status == 1000) {
+                that.setData({
+                  hasType: true,
+                  'place.hasOrder': true,
+                  'place.agent_id': res2.data
+                });
+                app.globalData.agent_id = res2.data;
+
+                app.request.hasPrise({
+                  data: {
+                    agent_id: res2.data
+                  },
+                  success: res3 => {
+                    // console.log('当前区域代理商是否录入价格', res3);
+                    if (res3.status == 1000) {
+                      that.setData({
+                        'place.hasOrder': true,
+                      });
+                    } else if (res3.status == 40007) {
+                      that.setData({
+                        'place.hasOrder': false
+                      });
+                    }
+                  }
+                })
+
+              } else if (res2.status == 40007) {
+                app.request.showTips('当前地点无代理商，请重新选择地点');
+                that.setData({
+                  'place.hasOrder': false
+                });
+              } else if (res2.status == 40010) {
+                app.request.showTips('当前地点无该服务类型，请重新选择服务类型或地点');
+                that.setData({
+                  hasType: false,
+                  'place.agent_id': res2.data
+                });
+                app.globalData.agent_id = res2.data;
+              }
+            },
+            fail: err => {
+              console.log('发送用户位置信息失败', err);
+            }
+          })
+        }
+
       },
       fail: err => {
         wx.getSetting({
@@ -508,7 +590,8 @@ Page({
       contact_phone: this.data.phoneNum,
       owner_id: app.globalData.u_id,
       agent_id: this.data.place.agent_id,
-      type_id: this.data.type_id
+      type_id: this.data.type_id,
+      n_id: n_id
     }
     app.request.submitFormData({
       data,
@@ -551,6 +634,8 @@ Page({
       return app.request.showTips('请选择结束时间');
     } else if (!this.data.place.choosed) {
       return app.request.showTips('请选择停车地点');
+    } else if (!this.data.place.isinarea) {
+      return app.request.showTips('当前选择的泊车地点不在活动服务范围内');
     } else if (!this.data.place.hasOrder) {
       return app.request.showTips('当前泊车地点无代理商或无该项业务，请重新选择');
     } else if (!reg.test(this.data.phoneNum)) {

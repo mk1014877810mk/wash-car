@@ -1,5 +1,7 @@
 // pages/mine/mine.js
 const app = getApp();
+let hadGetInfo = false;
+let firstLoad = true;
 Page({
 
   /**
@@ -15,13 +17,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.showLoading();
     let timer = setInterval(() => {
       if (app.common.startLoad(app)) {
         wx.showLoading();
         clearInterval(timer);
         this.getUserInfo();
       }
-    }, 500)
+    }, 500);
+    setTimeout(() => {
+      clearInterval(timer);
+      wx.hideLoading();
+      if (!app.common.startLoad(app)) {
+        if (!app.globalData.x_id) {
+          app.request.needToLogin(1091);
+        } else if (!app.globalData.hadBindInfo.phoneNum) {
+          app.request.needToLogin(1093);
+        } else {
+          this.getUserInfo(() => {
+            app.request.showTips('请绑定代理商');
+          });
+        }
+      }
+    }, 3000);
   },
 
   /**
@@ -31,18 +49,21 @@ Page({
 
   },
 
-  getUserInfo() {
+  getUserInfo(callback) {
     app.request.getUserInfo({
       x_id: app.globalData.x_id
     }).then(res => {
       // console.log('用户信息', res);
       if (res.status == 1000) {
+        hadGetInfo = true;
+        firstLoad = false;
         this.setData({
           name: res.data.user_name || '',
           userImg: res.data.user_img || '/images/user.png',
           phoneNum: res.data.user_phone || ''
         })
       }
+      callback && callback();
     }).catch(err => {
       console.log('用户信息获取失败', err);
     })
@@ -68,7 +89,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    if (!app.common.startLoad(app)) {
+      if (!app.globalData.x_id) {
+        app.request.needToLogin(1091);
+      } else if (!app.globalData.hadBindInfo.phoneNum) {
+        app.request.needToLogin(1093);
+      } else {
+        if (hadGetInfo || firstLoad) return;
+        this.getUserInfo(() => {
+          app.request.showTips('请绑定代理商');
+        });
+      }
+    }
   },
 
   /**

@@ -16,14 +16,30 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
+    wx.showLoading();
     let timer = setInterval(() => {
       if (app.common.startLoad(app)) {
         wx.showLoading();
         clearInterval(timer);
         this.getLastDataList();
       }
-    }, 500)
+    }, 500);
+    setTimeout(() => {
+      wx.hideLoading();
+      clearInterval(timer);
+      if (!app.common.startLoad(app)) {
+        if (!app.globalData.x_id) {
+          app.request.needToLogin(1091);
+        } else if (!app.globalData.hadBindInfo.phoneNum) {
+          app.request.needToLogin(1093);
+        } else {
+          this.getLastDataList(() => {
+            app.request.showTips('请绑定代理商');
+          });
+        }
+      }
+    }, 3000);
   },
 
   /**

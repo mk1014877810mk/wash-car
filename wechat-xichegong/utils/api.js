@@ -19,7 +19,7 @@ const requestApi = (url, method, data, complete) => {
           resolve(res.data);
         } else {
           showTips('服务器响应失败');
-          console.log('请求状态不为200', res)
+          console.log('请求状态不为200', res);
         }
       },
       fail: error => {
@@ -76,13 +76,14 @@ const reGetPosition = app => {
   });
 }
 // 获取用户位置信息
-const getPosition = app => {
+const getPosition = (app, callback) => {
   const that = this;
   wx.getLocation({
     success: res1 => {
       // console.log('当前地址', res1);
       app.globalData.lat = res1.latitude;
       app.globalData.long = res1.longitude;
+      callback && callback();
     },
     fail: err1 => {
       wx.getSetting({
@@ -100,24 +101,26 @@ const getPosition = app => {
   })
 }
 
+const goLogin = status => {
+  const temp = status ? '?status=' + status : '';
+  wx.navigateTo({
+    url: '/pages/login/login' + temp,
+  });
+}
+
 
 export default {
   ajaxUrl,
   showTips,
   getPosition,
-  goLogin: status => {
-    const temp = status ? '?status=' + status : '';
-    wx.navigateTo({
-      url: '/pages/login/login' + temp,
-    });
-  },
-  needToLogin: () => {
+  goLogin,
+  needToLogin: (status) => {
     wx.showModal({
       title: '温馨提示',
       content: '您尚未登录，请登录！',
       success: res => {
         if (res.confirm) {
-          goLogin();
+          goLogin(status);
         }
       }
     })

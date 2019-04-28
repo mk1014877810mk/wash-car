@@ -18,7 +18,7 @@ const requestApi = (reqObj) => {
         reqObj.success && reqObj.success(res.data);
       } else {
         showTips('服务器响应失败');
-        console.log('请求状态不为200', res)
+        console.log('请求状态不为200', res);
       }
     },
     fail: err => {
@@ -86,23 +86,7 @@ export const reGetPosition = (id) => {
                     wx.getLocation({
                       type: 'wgs84',
                       success: res => {
-                        // console.log('后来获取的用户位置',res)
-                        sendUserPosition({
-                          data: {
-                            u_id,
-                            longitude: res.longitude,
-                            latitude: res.latitude
-                          },
-                          success: res2 => {
-                            // console.log('发送用户位置信息', res2);
-                            if (res2.status == 1000 || res2.status == 40007) {
-                              console.log('位置发送后台成功');
-                            }
-                          },
-                          fail: err => {
-                            console.log('发送用户位置信息失败', err);
-                          }
-                        })
+                        console.log('后来获取的用户位置', res)
                       }
                     })
                   }
@@ -118,17 +102,6 @@ export const reGetPosition = (id) => {
     }
   });
 }
-// 根据经纬度计算代理商
-export const sendUserPosition = reqObj => {
-  requestApi({
-    url: `owner/compared`,
-    method: 'post',
-    data: reqObj.data,
-    success: reqObj.success,
-    fail: reqObj.fail,
-    complete: reqObj.complete
-  });
-}
 
 /**
  * index
@@ -139,7 +112,6 @@ export const getCurrentServerType = reqObj => {
   requestApi({
     url: `owner/service-type`,
     method: 'get',
-    data: reqObj.data,
     success: reqObj.success,
     fail: reqObj.fail
   });
@@ -192,7 +164,20 @@ export const submitApplyData = reqObj => {
 /**
  * appointment
  */
-// 获取洗车详细信息
+
+// 扫码推广获取信息
+export const getScaleInfo = reqObj => {
+  wx.showLoading();
+  requestApi({
+    url: 'owner/scan-code',
+    method: 'get',
+    data: reqObj.data,
+    success: reqObj.success,
+    fail: reqObj.fail
+  });
+}
+
+// 点击进入获取洗车详细信息
 export const getWashCarInfo = reqObj => {
   wx.showLoading();
   requestApi({
@@ -203,6 +188,7 @@ export const getWashCarInfo = reqObj => {
     fail: reqObj.fail
   });
 }
+
 // 获取车牌信息
 export const getCarList = reqObj => {
   wx.showLoading();
@@ -212,6 +198,29 @@ export const getCarList = reqObj => {
     data: reqObj.data,
     success: reqObj.success,
     fail: reqObj.fail
+  });
+}
+
+// 判断所选地点是否在固定代理商区域范围内
+export const isInArea = reqObj => {
+  requestApi({
+    url: `owner/contrast`,
+    method: 'post',
+    data: reqObj.data,
+    success: reqObj.success,
+    fail: reqObj.fail
+  });
+}
+
+// 根据经纬度计算代理商
+export const sendUserPosition = reqObj => {
+  requestApi({
+    url: `owner/compared`,
+    method: 'post',
+    data: reqObj.data,
+    success: reqObj.success,
+    fail: reqObj.fail,
+    complete: reqObj.complete
   });
 }
 

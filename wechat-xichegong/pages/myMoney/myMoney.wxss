@@ -97,56 +97,81 @@ page {
 
 .model .model-content {
   position: absolute;
-  left: 50%;
-  top: 45%;
-  transform: translate(-50%, -50%);
-  width: 60%;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
   padding: 50rpx;
   border-radius: 8rpx;
   background-color: #fff;
   text-align: center;
 }
 
-.model .model-content view.title{
-  font-size: 36rpx;
+.model .model-content image{
+  position: fixed;
+  top: 15%;
+  width: 150rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.model .model-content .canto{
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  font-size: 32rpx;
   font-weight: 600;
-  margin-bottom: 20rpx;
+  color: #666;
+  margin: 40rpx auto;
+}
+
+.model .model-content .canto text{
+  font-size: 40rpx;
+  color: #333;
 }
 
 .model .model-content .input{
-  width: 350rpx;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700rpx;
   color: #333;
-  border-bottom: 1rpx solid #000;
-  margin: 0 auto;
+  margin: 100rpx auto;
   font-weight: 600;
   font-size: 34rpx;
 }
 
-.model .model-content .input input{
-  display: inline-block;
-  padding-left: 4rpx;
-  font-size: 28rpx;
-  font-weight: 400;
-  width: 300rpx;
-  margin-bottom: -12rpx;
-  text-align: left;
+.model .model-content .input text.input-title{
+  font-size: 32rpx;
+  color: #666;
 }
 
-.model .model-content .canto{
-  width: 350rpx;
+.model .model-content .input input{
+  display: inline-block;
+  padding: 10rpx 16rpx;
+  font-size: 30rpx;
+  font-weight: 400;
+  width: 400rpx;
+  margin-bottom: -20rpx;
   text-align: left;
-  font-size: 26rpx;
-  color: #999;
-  margin: 20rpx auto;
+  border-bottom: 1px solid #000;
 }
 
 .model .model-content view.submit{
-  width: 50%;
-  padding: 10rpx 20rpx;
-  font-size: 32rpx;
-  background-color: rgba(255, 170, 44, 1);
+  position: fixed;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 20rpx;
+  font-size: 35rpx;
+  background-color: #343d4a;
   color: #fff;
-  border-radius: 4rpx;
+  border-radius: 10rpx;
   margin: 30rpx auto 0;
 }
 

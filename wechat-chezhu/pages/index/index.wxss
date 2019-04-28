@@ -1,7 +1,7 @@
 /**index.wxss**/
 
 .box {
-  padding-bottom: 200rpx;
+  padding-bottom: 130rpx;
 }
 
 .box .top swiper {
@@ -130,13 +130,13 @@
   transform: translateX(32rpx);
 }
 
-.box .own-info button::after{
+.box .own-info button::after {
   border: none;
 }
 
-.box .own-info button>image{
+.box .own-info button>image {
   width: 40rpx;
-  transform: translate(-20rpx,8rpx);
+  transform: translate(-20rpx, 8rpx);
 }
 
 .box .own-info>image {

@@ -19,7 +19,7 @@ App({
         }).then(res1 => {
           // console.log('登录前检测', res1)
           if (res1.status == 1091 || res1.status == 1093) {
-            
+
             if (res1.status == 1093) this.globalData.x_id = res1.x_id;
 
             setTimeout(() => {
@@ -30,6 +30,7 @@ App({
 
           } else if (res1.status == 1000) {
             this.globalData.x_id = res1.data.x_id;
+            this.globalData.hadBindInfo.phoneNum = true;
             // 重复获取用户位置
             request.default.getPosition(this);
             setInterval(() => {
@@ -86,8 +87,8 @@ App({
     lat: '', // 用户位置纬度
     long: '', // 用户位置经度
     hadBindInfo: { // 是否绑定信息
-      phoneNum: false,  // 是否绑定手机号
-      agent: false  // 是否绑定代理商
+      phoneNum: false, // 是否绑定手机号
+      agent: false // 是否绑定代理商
     },
   }
 })
